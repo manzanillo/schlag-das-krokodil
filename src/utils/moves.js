@@ -1,7 +1,14 @@
-export function calculatePossibleMoves(state, player, direction) {
+function getDirectionForPlayer(player) {
+  if (player == 1) return 'down'
+  if (player == 2) return 'up'
+}
+
+export function calculatePossibleMoves(state, player) {
   const dimension = Math.sqrt(state.length)
   const opponent = player == 1 ? 2 : 1
   const empty = 0
+  const direction = getDirectionForPlayer(player)
+
   if (dimension * dimension != state.length) {
     console.log('provided state is not a square')
     return

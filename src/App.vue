@@ -10,7 +10,7 @@
     <div class="rulesets">
       <PossibleActions
         v-bind:state="[0,1,1,1,0,0,2,2,2]"
-        v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2,'up')"
+        v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2)"
         v-bind:sweets="[1, 2, 3]"
       />
     </div>
