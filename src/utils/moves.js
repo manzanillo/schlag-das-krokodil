@@ -1,4 +1,4 @@
-calculatePossibleMoves = function(state, player, direction) {
+export function calculatePossibleMoves(state, player, direction) {
   const dimension = Math.sqrt(state.length)
   const opponent = player == 1 ? 2 : 1
   const empty = 0

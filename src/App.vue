@@ -10,7 +10,7 @@
     <div class="rulesets">
       <PossibleActions
         v-bind:state="[0,1,1,1,0,0,2,2,2]"
-        v-bind:actions="[[0,1], [5,7]]"
+        v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2,'up')"
         v-bind:sweets="[1, 2, 3]"
       />
     </div>
@@ -20,12 +20,16 @@
 <script>
 import Chess from "./components/chess.vue";
 import PossibleActions from "./components/PossibleActions.vue";
+import { calculatePossibleMoves } from "./utils/moves.js";
 
 export default {
   name: "app",
   components: {
     Chess,
     PossibleActions
+  },
+  methods: {
+    calculatePossibleMoves
   }
 };
 </script>

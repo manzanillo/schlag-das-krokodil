@@ -11,7 +11,6 @@
 
 <script>
 import Chess from "./chess.vue";
-
 export default {
   name: "PossibleActions",
   components: {
