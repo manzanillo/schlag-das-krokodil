@@ -38,3 +38,16 @@ export function calculatePossibleMoves(state, player, direction) {
 
   return possibleMoves
 }
+
+export function performMove(state, move) {
+  const from = move[0]
+  const to = move[1]
+  const newState = state.slice(0)
+  newState[from] = 0
+  newState[to] = state[from]
+  return newState
+}
+
+export function calculateAllPossibleStates(initialState) {}
+
+function calculateAllPossibleStatesHelper(stateNow, allStates) {}
