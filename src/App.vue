@@ -8,11 +8,17 @@
     <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
     <h4>Beispiel für kleineres Schach, um Spielsituation zu zeigen</h4>
     <div class="rulesets">
-      <PossibleActions
-        v-bind:state="[0,1,1,1,0,0,2,2,2]"
-        v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2)"
-        v-bind:sweets="[1, 2, 3]"
-      />
+      <div
+        v-for="(state, index) in calculateAllPossibleStatesForPC([1,1,1,0,0,0,2,2,2])"
+        :key="index"
+        class="ruleset"
+      >
+        <PossibleActions
+          v-bind:state="state"
+          v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2)"
+          v-bind:sweets="[1, 2, 3]"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +26,10 @@
 <script>
 import Chess from "./components/chess.vue";
 import PossibleActions from "./components/PossibleActions.vue";
-import { calculatePossibleMoves } from "./utils/moves.js";
+import {
+  calculatePossibleMoves,
+  calculateAllPossibleStatesForPC
+} from "./utils/moves.js";
 
 export default {
   name: "app",
@@ -29,7 +38,8 @@ export default {
     PossibleActions
   },
   methods: {
-    calculatePossibleMoves
+    calculatePossibleMoves,
+    calculateAllPossibleStatesForPC
   }
 };
 </script>
@@ -44,8 +54,12 @@ export default {
   margin-top: 60px;
 }
 
+.ruleset {
+}
+
 .rulesets {
-  width: 20%;
+  display: grid;
+  grid-template-columns: 25% 25% 25%;
 }
 
 #main-game {

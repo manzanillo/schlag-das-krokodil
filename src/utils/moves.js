@@ -55,6 +55,63 @@ export function performMove(state, move) {
   return newState
 }
 
-export function calculateAllPossibleStates(initialState) {}
+function checkIfPlayerWins(state, player) {
+  const dimension = Math.sqrt(state.length)
+  const opponent = player == 1 ? 2 : 1
+  const direction = getDirectionForPlayer(player)
 
-function calculateAllPossibleStatesHelper(stateNow, allStates) {}
+  if (state.filter(x => x == opponent).length == 0) {
+    return true
+  }
+
+  if (direction == 'down') {
+    for (let i = 0; i < dimension; i++) {
+      if (state[state.length - 1 - i] == player) {
+        return true
+      }
+    }
+  }
+  if (direction == 'up') {
+    for (let i = 0; i < dimension; i++) {
+      if (state[i] == player) {
+        return true
+      }
+    }
+  }
+  if (calculatePossibleMoves([...state], opponent).length == 0) {
+    return true
+  }
+
+  return false
+}
+
+export function calculateAllPossibleStatesForPC(initialState) {
+  let allStates = calculateAllPossibleStatesHelper(initialState, 0, 1)
+  return allStates
+    .map(({ state, iteration }) => (iteration % 2 == 1 ? state : []))
+    .filter(state => state.length > 0)
+}
+
+function calculateAllPossibleStatesHelper(stateNow, iteration, player) {
+  let states = [{ state: stateNow, iteration: iteration }]
+  const direction = getDirectionForPlayer(player)
+  const opponent = player == 1 ? 2 : 1
+  const possibleMoves = calculatePossibleMoves([...stateNow], player, direction)
+  for (let i = 0; i < possibleMoves.length; i++) {
+    const newState = performMove(stateNow, possibleMoves[i])
+    if (
+      !checkIfPlayerWins(newState, player) &&
+      !checkIfPlayerWins(newState, opponent)
+    ) {
+      const additionalStates = calculateAllPossibleStatesHelper(
+        newState,
+        iteration + 1,
+        opponent
+      )
+
+      states = states.concat(additionalStates)
+    }
+  }
+
+  return states
+}
