@@ -29,7 +29,7 @@ export function calculatePossibleMoves(state, player, direction) {
           }
 
           if (j - 1 < dimension && rows[nextRow][j - 1] == opponent) {
-            possibleMoves.push([i * dimension + j, nextRow * dimension + j + 1])
+            possibleMoves.push([i * dimension + j, nextRow * dimension + j - 1])
           }
         }
       }
