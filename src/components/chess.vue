@@ -34,7 +34,6 @@ export default {
 }
 
 .field > div {
-  padding: 0.2em;
   border: 1px solid lightgray;
 }
 </style>
