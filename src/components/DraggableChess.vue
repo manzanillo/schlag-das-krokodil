@@ -1,6 +1,6 @@
 <template id="chessground">
   <div>
-    <draggable class="field" v-model="currentState" @sort="update" :move="checkMove">
+    <draggable class="field" v-model="currentState" :move="checkMove">
       <div v-for="(occupation, index) in currentState" :key="index">
         <div v-if="occupation === 0">
           <!-- field is empty -->
@@ -20,7 +20,11 @@
 
 <script>
 import draggable from "vuedraggable";
-import { calculatePossibleMoves, arrayContainsArray } from "../utils/moves.js";
+import {
+  calculatePossibleMoves,
+  arrayContainsArray,
+  performMove
+} from "../utils/moves.js";
 
 export default {
   name: "DraggableChess",
@@ -36,19 +40,16 @@ export default {
     };
   },
   methods: {
-    update: function(evt) {
-      console.log(this.currentState);
-      console.log(evt);
-      this.currentState[evt.oldIndex] = 0;
-      this.$forceUpdate();
-    },
     checkMove: function(evt) {
       if (this.currentState[evt.draggedContext.index] == 1) {
         //player selected
         const possibleMoves = calculatePossibleMoves(this.currentState, 1);
         const moveTried = [evt.draggedContext.index, evt.relatedContext.index];
         if (arrayContainsArray(possibleMoves, moveTried)) {
-          return true;
+          this.currentState[evt.oldIndex] = 0;
+          this.currentState = performMove(this.currentState, moveTried);
+          this.$forceUpdate();
+          return false; //workaround ;-)
         }
       }
       return false;
