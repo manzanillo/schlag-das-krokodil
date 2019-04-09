@@ -81,15 +81,15 @@ export default {
     };
   },
   methods: {
-    checkWinner: function(newState) {
-      if (checkIfPlayerWins(newState, this.player)) {
-        this.winsPlayer++;
-        this.displayMessage("Du gewinnst!");
-        return true;
-      } else if (checkIfPlayerWins(newState, this.computer)) {
-        this.winsPC++;
-        this.displayMessage("Computer gewinnt!");
-
+    checkWinner: function(newState, who) {
+      if (checkIfPlayerWins(newState, who)) {
+        if (who === this.player) {
+          this.winsPlayer++;
+          this.displayMessage("Du gewinnst!");
+        } else {
+          this.winsPC++;
+          this.displayMessage("Computer gewinnt!");
+        }
         return true;
       }
       return false;
@@ -103,7 +103,10 @@ export default {
       });
     },
     handleNewState: function(newState) {
-      if (this.checkWinner(newState)) {
+      if (
+        this.checkWinner(newState, this.player) ||
+        this.checkWinner(newState, this.computer)
+      ) {
         const self = this;
         setTimeout(function() {
           self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
@@ -119,7 +122,7 @@ export default {
           const self = this;
           setTimeout(function() {
             self.state = stateAfterPCMove;
-            if (self.checkWinner(stateAfterPCMove)) {
+            if (self.checkWinner(stateAfterPCMove, this.computer)) {
               setTimeout(function() {
                 self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
               }, 1000);
