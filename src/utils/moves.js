@@ -3,7 +3,8 @@ function getDirectionForPlayer(player) {
   if (player == 2) return 'up'
 }
 
-export function calculatePossibleMoves(state, player) {
+export function calculatePossibleMoves(originalState, player) {
+  let state = [...originalState]
   const dimension = Math.sqrt(state.length)
   const opponent = player == 1 ? 2 : 1
   const empty = 0
@@ -114,4 +115,26 @@ function calculateAllPossibleStatesHelper(stateNow, iteration, player) {
   }
 
   return states
+}
+
+export function arrayContainsArray(array, element) {
+  let result = true
+
+  for (let i = 0; i < array.length; i++) {
+    result = true
+    let ar = array[i]
+    if (element.length != ar.length) {
+      return false
+    }
+    for (let j = 0; j < element.length; j++) {
+      if (ar[j] != element[j]) {
+        result = false
+      }
+    }
+
+    if (result == true) {
+      return true
+    }
+  }
+  return result
 }
