@@ -1,18 +1,37 @@
 <template id="chessground">
   <div class="field">
-    <div v-for="(occupation, index) in state" :key="index">
-      <div v-if="occupation === 0">
-        <!-- field is empty -->
-      </div>
-      <div v-if="occupation === 1">
-        <!-- player is occupying field -->
-        <img src="../assets/monkey.svg" alt="triangle with all three sides equal" width="100%">
-      </div>
-      <div v-if="occupation === 2">
-        <!-- computer is occupying field -->
-        <img src="../assets/croco.svg" alt="triangle with all three sides equal" width="100%">
-      </div>
-    </div>
+    <svg :width="dimension" :height="dimension">
+      <g v-for="(occupation, index) in state" :key="index">
+        <rect
+          v-if="occupation === 0"
+          :x="dimension/3 * (index % 3)"
+          :y="dimension/3 * (Math.floor(index / 3))"
+          :width="dimension/3"
+          :height="dimension/3"
+          stroke="lightgray"
+          style="fill:rgb(255,255,255)"
+          stroke-width="1"
+        ></rect>
+
+        <image
+          v-if="occupation === 1"
+          :width="dimension/3"
+          :height="dimension/3"
+          :x="dimension/3 * (index % 3)"
+          :y="dimension/3 * (Math.floor(index / 3))"
+          xlink:href="../assets/monkey.svg"
+        ></image>
+
+        <image
+          v-if="occupation === 2"
+          :width="dimension/3"
+          :height="dimension/3"
+          :x="dimension/3 * (index % 3)"
+          :y="dimension/3 * (Math.floor(index / 3))"
+          xlink:href="../assets/croco.svg"
+        ></image>
+      </g>
+    </svg>
   </div>
 </template>
 
@@ -20,7 +39,8 @@
 export default {
   name: "Chess",
   props: {
-    state: Array
+    state: Array,
+    dimension: { type: Number, default: 180 }
   }
 };
 </script>
