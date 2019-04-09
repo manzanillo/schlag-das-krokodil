@@ -36,7 +36,7 @@ export function calculatePossibleMoves(originalState, player) {
             possibleMoves.push([i * dimension + j, nextRow * dimension + j + 1])
           }
 
-          if (j - 1 < dimension && rows[nextRow][j - 1] == opponent) {
+          if (j - 1 >= 0 && rows[nextRow][j - 1] == opponent) {
             possibleMoves.push([i * dimension + j, nextRow * dimension + j - 1])
           }
         }
