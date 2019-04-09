@@ -5,9 +5,7 @@
     <div id="main-view">
       <div id="main-game">
         <h4 class="left-text">Spielfeld</h4>
-
         <DraggableChess :state="this.state" @new-state="handleNewState"/>
-
         <p class="left-text">
           Siege Spieler: {{winsPlayer}}
           <br>
@@ -76,8 +74,17 @@ export default {
       }
       return false;
     },
+    displayMessage: function(message) {
+      this.$message({
+        message: message,
+        type: "info",
+        showClose: true,
+        duration: 1000
+      });
+    },
     handleNewState: function(newState) {
       if (this.checkWinner(newState)) {
+        this.displayMessage("Du gewinnst!");
         const self = this;
         setTimeout(function() {
           self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
@@ -94,6 +101,7 @@ export default {
           setTimeout(function() {
             self.state = stateAfterPCMove;
             if (self.checkWinner(stateAfterPCMove)) {
+              this.displayMessage("Computer gewinnt!");
               setTimeout(function() {
                 self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
               }, 1000);
