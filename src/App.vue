@@ -16,11 +16,7 @@
       <div id="main-rules">
         <h4 class="left-text">Computerregeln</h4>
         <div class="rulesets">
-          <div
-            v-for="(state, index) in calculateAllPossibleStatesForPC([1,1,1,0,0,0,2,2,2])"
-            :key="index"
-            class="ruleset"
-          >
+          <div v-for="(state, index) in computerModel" :key="index" class="ruleset">
             <PossibleActions
               v-bind:state="state"
               v-bind:actions="calculatePossibleMoves(state,2)"
@@ -58,7 +54,18 @@ export default {
       computer: 2,
       active: 1,
       winsPlayer: 0,
-      winsPC: 0
+      winsPC: 0,
+      computerModel: calculateAllPossibleStatesForPC([
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        2,
+        2,
+        2
+      ])
     };
   },
   methods: {

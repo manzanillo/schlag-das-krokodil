@@ -59,7 +59,7 @@
         </marker>
       </defs>
 
-      <g v-for="(occupation, index) in state" :key="index">
+      <g v-for="(occupation, index) in state" :key="Math.random()">
         <rect
           v-if="occupation === 0"
           :x="dimension/3 * (index % 3)"
@@ -115,11 +115,11 @@ export default {
   data: function() {
     return {
       colors: [
-        { name: "url(#arrow-blue)", hex: "#00f" },
-        { name: "url(#arrow-red)", hex: "#f00" },
-        { name: "url(#arrow-green)", hex: "#0f0" },
-        { name: "url(#arrow-yellow)", hex: "#ff0" },
-        { name: "url(#arrow-purple)", hex: "#80f" }
+        { name: "url(#arrow-blue)", hex: "#00f", fill: "blue" },
+        { name: "url(#arrow-red)", hex: "#f00", fill: "red" },
+        { name: "url(#arrow-green)", hex: "#0f0", fill: "green" },
+        { name: "url(#arrow-yellow)", hex: "#ff0", fill: "yellow" },
+        { name: "url(#arrow-purple)", hex: "#80f", fill: "purple" }
       ]
     };
   }

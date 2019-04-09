@@ -1,10 +1,19 @@
 <template id="chessground">
   <div class="actions-field">
-    <Chess v-bind:state="state" v-bind:dimension="90" v-bind:actions="actions"/>
+    <Chess v-bind:state="state" v-bind:dimension="dimension" v-bind:actions="actions"/>
     <div class="actions-rating">
-      <div v-for="(sweet, index) in sweets" :key="index">
-        <div v-for="i in sweet" :key="i" class="circle red-circle"></div>
-      </div>
+      <svg :width="dimension" :height="dimension">
+        <g v-for="(sweet, index) in sweets" :key="index">
+          <g v-for="i in sweet" :key="i">
+            <circle
+              :cx="dimension/4 * index + 10"
+              :cy="dimension/4 * i"
+              r="10"
+              :fill="colors[index].fill"
+            ></circle>
+          </g>
+        </g>
+      </svg>
     </div>
   </div>
 </template>
@@ -20,6 +29,18 @@ export default {
     state: Array,
     actions: Array,
     sweets: Array
+  },
+  data: function() {
+    return {
+      colors: [
+        { name: "url(#arrow-blue)", hex: "#00f", fill: "blue" },
+        { name: "url(#arrow-red)", hex: "#f00", fill: "red" },
+        { name: "url(#arrow-green)", hex: "#0f0", fill: "green" },
+        { name: "url(#arrow-yellow)", hex: "#ff0", fill: "yellow" },
+        { name: "url(#arrow-purple)", hex: "#80f", fill: "purple" }
+      ],
+      dimension: 90
+    };
   }
 };
 </script>
@@ -32,28 +53,5 @@ export default {
   grid-auto-rows: 1fr;
   padding: 0.2em;
   border: 1px solid lightgray;
-}
-.actions-rating {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-}
-.red-circle {
-  background-color: red;
-  border: 2px solid rgba(67, 12, 12, 0.4); /*rahmenfarbe*/
-}
-
-.yellow-circle {
-  background-color: yellow;
-  border: 2px solid rgba(67, 12, 12, 0.4); /*rahmenfarbe*/
-}
-
-.blue-circle {
-  background-color: blue;
-  border: 2px solid rgba(67, 12, 12, 0.4); /*rahmenfarbe*/
-}
-
-.circle {
-  height: 25%;
-  border-radius: 50%;
 }
 </style>
