@@ -16,11 +16,11 @@
       <div id="main-rules">
         <h4 class="left-text">Computerregeln</h4>
         <div class="rulesets">
-          <div v-for="(state, index) in computerModel" :key="index" class="ruleset">
+          <div v-for="(model, index) in computerModel" :key="index" class="ruleset">
             <PossibleActions
-              v-bind:state="state"
-              v-bind:actions="calculatePossibleMoves(state,2)"
-              v-bind:sweets="[1, 2, 3]"
+              v-bind:state="model.state"
+              v-bind:actions="model.actions"
+              v-bind:sweets="model.sweets"
             />
           </div>
         </div>
@@ -65,7 +65,14 @@ export default {
         2,
         2,
         2
-      ])
+      ]).map(state => {
+        const possibleMoves = calculatePossibleMoves(state, 2);
+        return {
+          state: state,
+          actions: possibleMoves,
+          sweets: new Array(possibleMoves.length).fill(1)
+        };
+      })
     };
   },
   methods: {
