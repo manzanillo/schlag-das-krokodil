@@ -23,7 +23,7 @@
           >
             <PossibleActions
               v-bind:state="state"
-              v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2)"
+              v-bind:actions="calculatePossibleMoves(state,2)"
               v-bind:sweets="[1, 2, 3]"
             />
           </div>

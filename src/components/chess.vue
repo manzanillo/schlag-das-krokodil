@@ -1,6 +1,64 @@
 <template id="chessground">
-  <div class="field">
+  <div>
     <svg :width="dimension" :height="dimension">
+      <defs>
+        <marker
+          id="arrow-red"
+          markerWidth="10"
+          markerHeight="10"
+          refX="0"
+          refY="2"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path d="M0,0 L0,4 L5,2 z" fill="#f00"></path>
+        </marker>
+        <marker
+          id="arrow-green"
+          markerWidth="10"
+          markerHeight="10"
+          refX="0"
+          refY="2"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path d="M0,0 L0,4 L5,2 z" fill="#0f0"></path>
+        </marker>
+        <marker
+          id="arrow-blue"
+          markerWidth="10"
+          markerHeight="10"
+          refX="0"
+          refY="2"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path d="M0,0 L0,4 L5,2 z" fill="#00f"></path>
+        </marker>
+        <marker
+          id="arrow-yellow"
+          markerWidth="10"
+          markerHeight="10"
+          refX="0"
+          refY="2"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path d="M0,0 L0,4 L5,2 z" fill="#ff0"></path>
+        </marker>
+        <marker
+          id="arrow-purple"
+          markerWidth="10"
+          markerHeight="10"
+          refX="0"
+          refY="2"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path d="M0,0 L0,4 L5,2 z" fill="#80f"></path>
+        </marker>
+      </defs>
+
       <g v-for="(occupation, index) in state" :key="index">
         <rect
           v-if="occupation === 0"
@@ -31,6 +89,17 @@
           xlink:href="../assets/croco.svg"
         ></image>
       </g>
+      <g v-for="(action, index) in actions" :key="index">
+        <line
+          :x1="dimension/3 * (action[0] % 3) + dimension/6"
+          :y1="dimension/3 * (Math.floor(action[0] / 3)) + dimension/6"
+          :x2="dimension/3 * (action[1] % 3) + dimension/6"
+          :y2="dimension/3 * (Math.floor(action[1] / 3)) + dimension/6"
+          :stroke="colors[index].hex"
+          stroke-width="3"
+          :marker-end="colors[index].name"
+        ></line>
+      </g>
     </svg>
   </div>
 </template>
@@ -40,20 +109,23 @@ export default {
   name: "Chess",
   props: {
     state: Array,
-    dimension: { type: Number, default: 180 }
+    dimension: { type: Number, default: 180 },
+    actions: Array
+  },
+  data: function() {
+    return {
+      colors: [
+        { name: "url(#arrow-blue)", hex: "#00f" },
+        { name: "url(#arrow-red)", hex: "#f00" },
+        { name: "url(#arrow-green)", hex: "#0f0" },
+        { name: "url(#arrow-yellow)", hex: "#ff0" },
+        { name: "url(#arrow-purple)", hex: "#80f" }
+      ]
+    };
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.field {
-  display: grid;
-  grid-template-columns: 25% 25% 25%;
-  grid-auto-rows: 1fr;
-}
-
-.field > div {
-  border: 1px solid lightgray;
-}
 </style>

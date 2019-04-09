@@ -1,6 +1,6 @@
 <template id="chessground">
   <div class="actions-field">
-    <Chess v-bind:state="state" v-bind:dimension="90"/>
+    <Chess v-bind:state="state" v-bind:dimension="90" v-bind:actions="actions"/>
     <div class="actions-rating">
       <div v-for="(sweet, index) in sweets" :key="index">
         <div v-for="i in sweet" :key="i" class="circle red-circle"></div>
