@@ -1,23 +1,29 @@
 <template>
   <div id="app">
     <h1>Reinforcement Learning - Schlag das Krokodil</h1>
-    <div id="main-game">
-      <DraggableChess :state="this.state" @new-state="handleNewState"/>
-    </div>
 
-    <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
-    <h4>Beispiel für kleineres Schach, um Spielsituation zu zeigen</h4>
-    <div class="rulesets">
-      <div
-        v-for="(state, index) in calculateAllPossibleStatesForPC([1,1,1,0,0,0,2,2,2])"
-        :key="index"
-        class="ruleset"
-      >
-        <PossibleActions
-          v-bind:state="state"
-          v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2)"
-          v-bind:sweets="[1, 2, 3]"
-        />
+    <div id="main-view">
+      <div id="main-game">
+        <h4 class="headlines">Spielfeld</h4>
+
+        <DraggableChess :state="this.state" @new-state="handleNewState"/>
+      </div>
+      <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
+      <div id="main-rules">
+        <h4 class="headlines">Computerregeln</h4>
+        <div class="rulesets">
+          <div
+            v-for="(state, index) in calculateAllPossibleStatesForPC([1,1,1,0,0,0,2,2,2])"
+            :key="index"
+            class="ruleset"
+          >
+            <PossibleActions
+              v-bind:state="state"
+              v-bind:actions="calculatePossibleMoves([0,1,1,1,0,0,2,2,2],2)"
+              v-bind:sweets="[1, 2, 3]"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -79,18 +85,35 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+@media (min-width: 800px) {
+  #main-view {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 40% 60%;
+  }
+  #main-game {
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 800px) {
+  #main-game {
+    display: inline-grid;
+    justify-content: center;
+  }
 }
 
 .ruleset {
 }
 
+.headlines {
+  text-align: left;
+}
+
 .rulesets {
   display: grid;
   grid-template-columns: 25% 25% 25%;
-}
-
-#main-game {
-  width: 50%;
 }
 </style>
