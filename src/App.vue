@@ -152,6 +152,7 @@ export default {
   }
   #main-game {
     margin-left: 10%;
+    margin-right: 10%;
   }
 }
 
