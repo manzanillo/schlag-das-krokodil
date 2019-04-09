@@ -7,7 +7,7 @@
           <g v-for="i in sweet" :key="i">
             <circle
               :cx="dimension/4 * index + 10"
-              :cy="dimension/4 * i"
+              :cy="dimension/4 * (i-1) + dimension/Math.pow(2, sweet)"
               r="10"
               :fill="colors[index].fill"
             ></circle>
