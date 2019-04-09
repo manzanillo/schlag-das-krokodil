@@ -171,6 +171,6 @@ export default {
 
 .rulesets {
   display: grid;
-  grid-template-columns: 25% 25% 25%;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 </style>
