@@ -4,13 +4,19 @@
 
     <div id="main-view">
       <div id="main-game">
-        <h4 class="headlines">Spielfeld</h4>
+        <h4 class="left-text">Spielfeld</h4>
 
         <DraggableChess :state="this.state" @new-state="handleNewState"/>
+
+        <p class="left-text">
+          Siege Spieler: {{winsPlayer}}
+          <br>
+          Siege PC: {{winsPC}}
+        </p>
       </div>
       <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
       <div id="main-rules">
-        <h4 class="headlines">Computerregeln</h4>
+        <h4 class="left-text">Computerregeln</h4>
         <div class="rulesets">
           <div
             v-for="(state, index) in calculateAllPossibleStatesForPC([1,1,1,0,0,0,2,2,2])"
@@ -36,7 +42,8 @@ import PossibleActions from "./components/PossibleActions.vue";
 import {
   calculatePossibleMoves,
   calculateAllPossibleStatesForPC,
-  performMove
+  performMove,
+  checkIfPlayerWins
 } from "./utils/moves.js";
 
 export default {
@@ -50,29 +57,53 @@ export default {
     return {
       state: [1, 1, 1, 0, 0, 0, 2, 2, 2],
       player: 1,
-      opponent: 2,
-      active: 1
+      computer: 2,
+      active: 1,
+      winsPlayer: 0,
+      winsPC: 0
     };
   },
   methods: {
     calculatePossibleMoves,
     calculateAllPossibleStatesForPC,
+    checkWinner: function(newState) {
+      if (checkIfPlayerWins(newState, this.player)) {
+        this.winsPlayer++;
+        return true;
+      } else if (checkIfPlayerWins(newState, this.computer)) {
+        this.winsPC++;
+        return true;
+      }
+      return false;
+    },
     handleNewState: function(newState) {
-      this.state = newState;
-      this.active = this.active == this.player ? this.opponent : this.player;
-      if (this.active === this.opponent) {
-        const possibleMoves = calculatePossibleMoves(this.state, 2); //choose play type randomly
-        const move =
-          possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-        const stateAfterPCMove = performMove(this.state, move);
+      if (this.checkWinner(newState)) {
         const self = this;
         setTimeout(function() {
-          self.state = stateAfterPCMove;
+          self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
         }, 1000);
       } else {
-        // allow human to interact with the figures
+        this.state = newState;
+        this.active = this.active == this.player ? this.opponent : this.player;
+        if (this.active === this.opponent) {
+          const possibleMoves = calculatePossibleMoves(this.state, 2); //choose play type randomly
+          const move =
+            possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+          const stateAfterPCMove = performMove(this.state, move);
+          const self = this;
+          setTimeout(function() {
+            self.state = stateAfterPCMove;
+            if (self.checkWinner(stateAfterPCMove)) {
+              setTimeout(function() {
+                self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
+              }, 1000);
+            }
+          }, 1000);
+        } else {
+          // allow human to interact with the figures
+        }
+        this.active = this.active == this.player ? this.opponent : this.player;
       }
-      this.active = this.active == this.player ? this.opponent : this.player;
     }
   }
 };
@@ -108,7 +139,7 @@ export default {
 .ruleset {
 }
 
-.headlines {
+.left-text {
   text-align: left;
 }
 

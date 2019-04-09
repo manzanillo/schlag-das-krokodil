@@ -56,7 +56,7 @@ export function performMove(state, move) {
   return newState
 }
 
-function checkIfPlayerWins(state, player) {
+export function checkIfPlayerWins(state, player) {
   const dimension = Math.sqrt(state.length)
   const opponent = player == 1 ? 2 : 1
   const direction = getDirectionForPlayer(player)
@@ -137,4 +137,13 @@ export function arrayContainsArray(array, element) {
     }
   }
   return result
+}
+
+function matchSituationsAreMirrored(state1, state2) {
+  //Aktuell nur für 3x3
+  const firstRow = state1[0] == state2[2] && state1[2] == state2[0]
+  const secondRow = state1[3] == state2[5] && state1[5] == state2[3]
+  const thirdRow = state1[6] == state2[8] && state1[8] == state2[6]
+
+  return firstRow && secondRow && thirdRow
 }
