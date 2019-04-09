@@ -2,14 +2,14 @@
   <div>
     <draggable class="field" v-model="currentState" :move="checkMove">
       <div v-for="(occupation, index) in currentState" :key="index">
-        <div v-if="occupation === 0">
+        <div class="field-slot" v-if="occupation === 0">
           <!-- field is empty -->
         </div>
-        <div v-if="occupation === 1">
+        <div class="field-slot" v-if="occupation === 1">
           <!-- player is occupying field -->
           <img src="../assets/monkey.svg" alt="triangle with all three sides equal" width="100%">
         </div>
-        <div v-if="occupation === 2">
+        <div class="field-slot" v-if="occupation === 2">
           <!-- computer is occupying field -->
           <img src="../assets/croco.svg" alt="triangle with all three sides equal" width="100%">
         </div>
@@ -49,28 +49,20 @@ export default {
           this.currentState[evt.oldIndex] = 0;
           this.currentState = performMove(this.currentState, moveTried);
           this.$forceUpdate();
+          this.$emit("new-state", this.currentState);
+
           return false; //workaround ;-)
         }
       }
       return false;
     }
+  },
+  watch: {
+    state: function(newVal, oldVal) {
+      this.currentState = newVal;
+    }
   }
 };
-//TODO:: Use event to pass up changes in currentState to parent object : http://michaelnthiessen.com/vue-props-vs-data/
-
-/*
-      //console.log(evt);
-      //this.currentState[evt.oldIndex] = 1;
-      //evt.newIndex;
-      //evt.oldIndex;
-      const from = this.currentState[evt.draggedContext.index];
-      this.currentState[evt.draggedContext.futureIndex] = from;
-      //evt.draggedContext.index
-      //evt.draggedContext.futureIndex
-      console.log(this.currentState);
-      this.$forceUpdate();
-      return false; //
-*/
 </script>
 
 

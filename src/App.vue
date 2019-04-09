@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Reinforcement Learning - Schlag das Krokodil</h1>
     <div id="main-game">
-      <DraggableChess v-bind:state="[1,1,1,0,0,0,2,2,2]"/>
+      <DraggableChess :state="this.state" @new-state="handleNewState"/>
     </div>
 
     <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
@@ -26,11 +26,11 @@
 <script>
 import Chess from "./components/chess.vue";
 import DraggableChess from "./components/DraggableChess.vue";
-
 import PossibleActions from "./components/PossibleActions.vue";
 import {
   calculatePossibleMoves,
-  calculateAllPossibleStatesForPC
+  calculateAllPossibleStatesForPC,
+  performMove
 } from "./utils/moves.js";
 
 export default {
@@ -40,9 +40,34 @@ export default {
     DraggableChess,
     PossibleActions
   },
+  data: function() {
+    return {
+      state: [1, 1, 1, 0, 0, 0, 2, 2, 2],
+      player: 1,
+      opponent: 2,
+      active: 1
+    };
+  },
   methods: {
     calculatePossibleMoves,
-    calculateAllPossibleStatesForPC
+    calculateAllPossibleStatesForPC,
+    handleNewState: function(newState) {
+      this.state = newState;
+      this.active = this.active == this.player ? this.opponent : this.player;
+      if (this.active === this.opponent) {
+        const possibleMoves = calculatePossibleMoves(this.state, 2); //choose play type randomly
+        const move =
+          possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+        const stateAfterPCMove = performMove(this.state, move);
+        const self = this;
+        setTimeout(function() {
+          self.state = stateAfterPCMove;
+        }, 1000);
+      } else {
+        // allow human to interact with the figures
+      }
+      this.active = this.active == this.player ? this.opponent : this.player;
+    }
   }
 };
 </script>
