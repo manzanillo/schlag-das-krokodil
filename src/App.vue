@@ -5,7 +5,11 @@
     <div id="main-view">
       <div id="main-game">
         <h4 class="left-text">Spielfeld</h4>
-        <DraggableChess :state="this.state" @new-state="handleNewState"/>
+        <DraggableChess
+          :state="this.state"
+          :usersTurn="this.usersTurn"
+          @new-state="handleNewState"
+        />
         <p class="left-text">
           Siege Spieler: {{winsPlayer}}
           <br>
@@ -55,6 +59,7 @@ export default {
       active: 1,
       winsPlayer: 0,
       winsPC: 0,
+      usersTurn: true,
       computerModel: calculateAllPossibleStatesForPC([
         1,
         1,
@@ -76,14 +81,15 @@ export default {
     };
   },
   methods: {
-    calculatePossibleMoves,
-    calculateAllPossibleStatesForPC,
     checkWinner: function(newState) {
       if (checkIfPlayerWins(newState, this.player)) {
         this.winsPlayer++;
+        this.displayMessage("Du gewinnst!");
         return true;
       } else if (checkIfPlayerWins(newState, this.computer)) {
         this.winsPC++;
+        this.displayMessage("Computer gewinnt!");
+
         return true;
       }
       return false;
@@ -98,15 +104,14 @@ export default {
     },
     handleNewState: function(newState) {
       if (this.checkWinner(newState)) {
-        this.displayMessage("Du gewinnst!");
         const self = this;
         setTimeout(function() {
           self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
         }, 1000);
       } else {
         this.state = newState;
-        this.active = this.active == this.player ? this.opponent : this.player;
-        if (this.active === this.opponent) {
+        this.active = this.active == this.player ? this.computer : this.player;
+        if (this.active === this.computer) {
           const possibleMoves = calculatePossibleMoves(this.state, 2); //choose play type randomly
           const move =
             possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
@@ -115,7 +120,6 @@ export default {
           setTimeout(function() {
             self.state = stateAfterPCMove;
             if (self.checkWinner(stateAfterPCMove)) {
-              self.displayMessage("Computer gewinnt!");
               setTimeout(function() {
                 self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
               }, 1000);
@@ -124,7 +128,7 @@ export default {
         } else {
           // allow human to interact with the figures
         }
-        this.active = this.active == this.player ? this.opponent : this.player;
+        this.active = this.active == this.player ? this.computer : this.player;
       }
     }
   }

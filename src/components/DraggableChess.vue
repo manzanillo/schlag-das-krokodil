@@ -1,6 +1,11 @@
 <template id="chessground">
   <div>
-    <draggable class="field" v-model="currentState" :move="checkMove">
+    <draggable
+      class="field"
+      v-model="currentState"
+      :move="checkMove"
+      :options="{disabled: !usersTurn}"
+    >
       <div v-for="(occupation, index) in currentState" :key="index">
         <div class="field-slot" v-if="occupation === 0">
           <!-- field is empty -->
@@ -32,7 +37,8 @@ export default {
     draggable
   },
   props: {
-    state: Array
+    state: Array,
+    usersTurn: Boolean
   },
   data() {
     return {
