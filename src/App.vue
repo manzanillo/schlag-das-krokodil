@@ -78,8 +78,8 @@ export default {
       this.$message({
         message: message,
         type: "info",
-        showClose: true,
-        duration: 1000
+        showClose: false,
+        duration: 1500
       });
     },
     handleNewState: function(newState) {
@@ -101,7 +101,7 @@ export default {
           setTimeout(function() {
             self.state = stateAfterPCMove;
             if (self.checkWinner(stateAfterPCMove)) {
-              this.displayMessage("Computer gewinnt!");
+              self.displayMessage("Computer gewinnt!");
               setTimeout(function() {
                 self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
               }, 1000);
