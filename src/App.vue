@@ -103,10 +103,7 @@ export default {
       });
     },
     handleNewState: function(newState) {
-      if (
-        this.checkWinner(newState, this.player) ||
-        this.checkWinner(newState, this.computer)
-      ) {
+      if (this.checkWinner(newState, this.player)) {
         const self = this;
         setTimeout(function() {
           self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
@@ -122,7 +119,7 @@ export default {
           const self = this;
           setTimeout(function() {
             self.state = stateAfterPCMove;
-            if (self.checkWinner(stateAfterPCMove, this.computer)) {
+            if (self.checkWinner(stateAfterPCMove, self.computer)) {
               setTimeout(function() {
                 self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
               }, 1000);
