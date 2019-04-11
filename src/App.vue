@@ -20,7 +20,7 @@
       <div id="main-rules">
         <h4 class="left-text">Computerregeln</h4>
         <div class="rulesets">
-          <div v-for="(model, index) in computerModel" :key="index" class="ruleset">
+          <div v-for="(model, index) in computerModel.getModel()" :key="index" class="ruleset">
             <PossibleActions
               v-bind:state="model.state"
               v-bind:actions="model.actions"
@@ -39,10 +39,10 @@ import DraggableChess from "./components/DraggableChess.vue";
 import PossibleActions from "./components/PossibleActions.vue";
 import {
   calculatePossibleMoves,
-  calculateAllPossibleStatesForPC,
   performMove,
   checkIfPlayerWins
 } from "./utils/moves.js";
+import LearningModel from "./utils/model.js";
 
 export default {
   name: "app",
@@ -60,24 +60,7 @@ export default {
       winsPlayer: 0,
       winsPC: 0,
       usersTurn: true,
-      computerModel: calculateAllPossibleStatesForPC([
-        1,
-        1,
-        1,
-        0,
-        0,
-        0,
-        2,
-        2,
-        2
-      ]).map(state => {
-        const possibleMoves = calculatePossibleMoves(state, 2);
-        return {
-          state: state,
-          actions: possibleMoves,
-          sweets: new Array(possibleMoves.length).fill(1)
-        };
-      })
+      computerModel: new LearningModel([1, 1, 1, 0, 0, 0, 2, 2, 2])
     };
   },
   methods: {
@@ -112,6 +95,7 @@ export default {
         this.state = newState;
         this.active = this.active == this.player ? this.computer : this.player;
         if (this.active === this.computer) {
+          const moveNeu = this.computerModel.choosePlayType(this.state);
           const possibleMoves = calculatePossibleMoves(this.state, 2); //choose play type randomly
           const move =
             possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
