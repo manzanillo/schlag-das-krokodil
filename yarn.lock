@@ -7587,6 +7587,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-drag-and-drop@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/vue-drag-and-drop/-/vue-drag-and-drop-3.0.0.tgz#ef832d9d0e8ab4f84782df77a0041f1690ea162e"
+  integrity sha512-fOrdAYBoxEMcBbrMFExbnYF6d6VaBlPzRPUyWlRuRhh7dZIGfIQZM07rHTzFmmHZIOLjvOKe1+A3npcg1Yy7Zg==
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"

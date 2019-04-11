@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "vue": "^2.6.6",
+    "vue-drag-and-drop": "^3.0.0",
     "vue-m-message": "^1.1.1",
     "vuedraggable": "^2.20.0"
   },
