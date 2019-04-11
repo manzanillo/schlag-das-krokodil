@@ -25,6 +25,7 @@
               v-bind:state="model.state"
               v-bind:actions="model.actions"
               v-bind:sweets="model.sweets"
+              v-bind:forceUpdate="forceUpdate"
             />
           </div>
         </div>
@@ -60,7 +61,8 @@ export default {
       winsPlayer: 0,
       winsPC: 0,
       usersTurn: true,
-      computerModel: new LearningModel([1, 1, 1, 0, 0, 0, 2, 2, 2])
+      computerModel: new LearningModel([1, 1, 1, 0, 0, 0, 2, 2, 2]),
+      forceUpdate: 1
     };
   },
   methods: {
@@ -88,6 +90,7 @@ export default {
     handleNewState: function(newState) {
       if (this.checkWinner(newState, this.player)) {
         this.computerModel.humanWon();
+        this.forceUpdate++;
         const self = this;
         setTimeout(function() {
           self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
@@ -103,6 +106,8 @@ export default {
             self.state = stateAfterPCMove;
             if (self.checkWinner(stateAfterPCMove, self.computer)) {
               self.computerModel.computerWon();
+              self.forceUpdate++;
+
               setTimeout(function() {
                 self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
               }, 1000);

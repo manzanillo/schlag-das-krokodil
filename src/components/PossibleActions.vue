@@ -15,6 +15,7 @@
         </g>
       </svg>
     </div>
+    <div style="display:none;">{{forceUpdate}}</div>
   </div>
 </template>
 
@@ -28,7 +29,8 @@ export default {
   props: {
     state: Array,
     actions: Array,
-    sweets: Array
+    sweets: Array,
+    forceUpdate: Number
   },
   data: function() {
     return {
@@ -39,8 +41,15 @@ export default {
         { name: "url(#arrow-yellow)", hex: "#ff0", fill: "yellow" },
         { name: "url(#arrow-purple)", hex: "#80f", fill: "purple" }
       ],
-      dimension: 90
+      dimension: 90,
+      currentSweets: this.sweets,
+      forceUpdateHelper: 1
     };
+  },
+  watch: {
+    forceUpdate: function(newVal, oldVal) {
+      this.forceUpdateHelper = newVal;
+    }
   }
 };
 </script>
