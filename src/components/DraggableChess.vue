@@ -50,7 +50,7 @@ export default {
       this.highlights.fill(false);
       this.$forceUpdate();
       // handle movement
-      console.log("handleDrop", this.currentlyDragging, e.target);
+      //console.log("handleDrop", this.currentlyDragging, e.target);
       const from = this.currentlyDragging.id;
       const to = e.target.id;
       const placeholder = this.currentState[from];

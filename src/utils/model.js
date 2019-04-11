@@ -73,11 +73,9 @@ export default class LearningModel {
 
   computerWon() {
     this.updateModel(true)
-    console.log(this.model[this.lastSituation].sweets)
   }
 
   humanWon() {
     this.updateModel(false)
-    console.log(this.model[this.lastSituation].sweets)
   }
 }
