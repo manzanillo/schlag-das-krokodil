@@ -142,12 +142,21 @@ export default {
     margin-left: 10%;
     margin-right: 10%;
   }
+
+  .rulesets {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 @media (max-width: 800px) {
   #main-game {
     display: inline-grid;
     justify-content: center;
+  }
+  .rulesets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -156,10 +165,5 @@ export default {
 
 .left-text {
   text-align: left;
-}
-
-.rulesets {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
 }
 </style>
