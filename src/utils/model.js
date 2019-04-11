@@ -43,7 +43,7 @@ export default class LearningModel {
       return
     }
 
-    const arrayForRandomSelect = this.model[0].sweets
+    const arrayForRandomSelect = this.model[indexForState].sweets
       .map((sweet, index) => new Array(sweet).fill(index))
       .flat()
 
