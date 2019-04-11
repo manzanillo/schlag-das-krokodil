@@ -57,7 +57,7 @@ export default {
       const possibleMoves = calculatePossibleMoves(this.currentState, 1);
       const moveTried = [from, to];
       if (arrayContainsArray(possibleMoves, moveTried)) {
-        this.currentState[this.currentlyDragging.id] = e.target.id;
+        this.currentState[this.currentlyDragging.id] = 0;
         this.currentState[e.target.id] = placeholder;
         this.$forceUpdate();
         this.$emit("new-state", this.currentState);

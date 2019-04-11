@@ -87,6 +87,7 @@ export default {
     },
     handleNewState: function(newState) {
       if (this.checkWinner(newState, this.player)) {
+        this.computerModel.humanWon();
         const self = this;
         setTimeout(function() {
           self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
@@ -95,15 +96,13 @@ export default {
         this.state = newState;
         this.active = this.active == this.player ? this.computer : this.player;
         if (this.active === this.computer) {
-          const moveNeu = this.computerModel.choosePlayType(this.state);
-          const possibleMoves = calculatePossibleMoves(this.state, 2); //choose play type randomly
-          const move =
-            possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+          const move = this.computerModel.choosePlayType(this.state);
           const stateAfterPCMove = performMove(this.state, move);
           const self = this;
           setTimeout(function() {
             self.state = stateAfterPCMove;
             if (self.checkWinner(stateAfterPCMove, self.computer)) {
+              self.computerModel.computerWon();
               setTimeout(function() {
                 self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
               }, 1000);

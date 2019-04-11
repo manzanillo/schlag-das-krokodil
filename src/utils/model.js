@@ -13,6 +13,8 @@ export default class LearningModel {
         sweets: new Array(possibleMoves.length).fill(1)
       }
     })
+    this.lastSituation = -1
+    this.lastActionTaken = -1
   }
 
   getModel() {
@@ -49,6 +51,33 @@ export default class LearningModel {
       arrayForRandomSelect[
         Math.floor(Math.random() * arrayForRandomSelect.length)
       ]
+    this.lastSituation = indexForState
+    this.lastActionTaken = selectedMove
     return this.model[indexForState].actions[selectedMove]
+  }
+
+  updateModel(computerWon) {
+    if (this.lastActionTaken == -1 || this.lastSituation == -1) {
+      return
+    }
+    if (computerWon) {
+      if (this.model[this.lastSituation].sweets[this.lastActionTaken] < 3) {
+        this.model[this.lastSituation].sweets[this.lastActionTaken]++
+      }
+    } else {
+      if (this.model[this.lastSituation].sweets[this.lastActionTaken] > 0) {
+        this.model[this.lastSituation].sweets[this.lastActionTaken]--
+      }
+    }
+  }
+
+  computerWon() {
+    this.updateModel(true)
+    console.log(this.model[this.lastSituation].sweets)
+  }
+
+  humanWon() {
+    this.updateModel(false)
+    console.log(this.model[this.lastSituation].sweets)
   }
 }
