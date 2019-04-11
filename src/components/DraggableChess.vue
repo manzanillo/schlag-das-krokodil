@@ -6,9 +6,8 @@
       v-drag-and-drop
       v-on:drag="handleDrag"
       v-on:drop="handleDrop"
-      v-on:drag-over="handleDragOver"
     >
-      <div class="field-slot" v-if="occupation === 0">
+      <div v-bind:class="{outline: highlights[index]}" class="field-slot" v-if="occupation === 0">
         <!-- field is empty -->
         <img v-bind:id="index" src="../assets/white.svg" alt="empty" width="100%">
       </div>
@@ -16,7 +15,7 @@
         <!-- player is occupying field -->
         <img v-bind:id="index" src="../assets/monkey.svg" alt="human" width="100%">
       </div>
-      <div class="field-slot" v-if="occupation === 2">
+      <div v-bind:class="{'outline': highlights[index]}" class="field-slot" v-if="occupation === 2">
         <!-- computer is occupying field -->
         <img v-bind:id="index" src="../assets/croco.svg" alt="computer" width="100%">
       </div>
@@ -42,11 +41,15 @@ export default {
     return {
       currentState: this.state,
       currentlyDragging: null,
-      loggedEvent: ""
+      highlights: new Array(this.state.length).fill(false)
     };
   },
   methods: {
     handleDrop: function(e) {
+      //remove all highlights
+      this.highlights.fill(false);
+      this.$forceUpdate();
+      // handle movement
       console.log("handleDrop", this.currentlyDragging, e.target);
       const from = this.currentlyDragging.id;
       const to = e.target.id;
@@ -62,10 +65,20 @@ export default {
     },
     handleDrag: function(e) {
       this.currentlyDragging = e.srcElement;
-    },
-    handleDragOver: function(e) {
-      console.log("handleDragOver", e);
-      this.loggedEvent = "handleDragOver";
+      if (this.currentState[this.currentlyDragging.id] == 1) {
+        // it belongs to a human, show where to place it
+        const possibleMoves = calculatePossibleMoves(this.currentState, 1);
+        let possibleDestinations = [];
+        for (let i = 0; i < possibleMoves.length; i++) {
+          if (possibleMoves[i][0] == this.currentlyDragging.id) {
+            possibleDestinations.push(possibleMoves[i][1]);
+          }
+        }
+        for (let i = 0; i < possibleDestinations.length; i++) {
+          this.highlights[possibleDestinations[i]] = true;
+        }
+        this.$forceUpdate();
+      }
     }
   },
   watch: {
@@ -87,5 +100,9 @@ export default {
 
 .field > div {
   border: 1px solid lightgray;
+}
+
+.outline {
+  border: 5px solid orangered;
 }
 </style>
