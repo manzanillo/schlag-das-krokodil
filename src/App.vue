@@ -36,6 +36,7 @@
 </template>
 
 <script>
+const resetToState = [1, 1, 1, 0, 0, 0, 2, 2, 2];
 import Chess from "./components/chess.vue";
 import DraggableChess from "./components/DraggableChess.vue";
 import PossibleActions from "./components/PossibleActions.vue";
@@ -57,14 +58,14 @@ export default {
   },
   data: function() {
     return {
-      state: [1, 1, 1, 0, 0, 0, 2, 2, 2],
+      state: [...resetToState],
       player: 1,
       computer: 2,
       active: 1,
       winsPlayer: 0,
       winsPC: 0,
       usersTurn: true,
-      computerModel: new LearningModel([1, 1, 1, 0, 0, 0, 2, 2, 2]),
+      computerModel: new LearningModel([...resetToState]),
       forceUpdate: 1
     };
   },
@@ -96,7 +97,9 @@ export default {
         this.forceUpdate++;
         const self = this;
         setTimeout(function() {
-          self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
+          console.log(resetToState);
+
+          self.state = [...resetToState];
         }, 1000);
       } else {
         this.state = newState;
@@ -112,7 +115,9 @@ export default {
               self.forceUpdate++;
 
               setTimeout(function() {
-                self.state = [1, 1, 1, 0, 0, 0, 2, 2, 2];
+                console.log(resetToState);
+
+                self.state = [...resetToState];
               }, 1000);
             }
           }, 1000);

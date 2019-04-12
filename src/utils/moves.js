@@ -15,7 +15,9 @@ export function calculatePossibleMoves(originalState, player) {
     return
   }
 
-  const rows = state.map(() => state.splice(0, 3)).filter(state => state)
+  const rows = state
+    .map(() => state.splice(0, dimension))
+    .filter(state => state)
 
   let possibleMoves = []
   for (let i = 0; i < dimension; i++) {
