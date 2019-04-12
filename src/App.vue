@@ -31,6 +31,7 @@
         </div>
       </div>
     </div>
+    <Tour/>
   </div>
 </template>
 
@@ -38,6 +39,7 @@
 import Chess from "./components/chess.vue";
 import DraggableChess from "./components/DraggableChess.vue";
 import PossibleActions from "./components/PossibleActions.vue";
+import Tour from "./components/Tour.vue";
 import {
   calculatePossibleMoves,
   performMove,
@@ -50,7 +52,8 @@ export default {
   components: {
     Chess,
     DraggableChess,
-    PossibleActions
+    PossibleActions,
+    Tour
   },
   data: function() {
     return {
