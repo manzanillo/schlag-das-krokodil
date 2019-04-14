@@ -142,6 +142,15 @@ export function arrayContainsArray(array, element) {
   return result
 }
 
+export function compareStates(state1, state2) {
+  for (let i = 0; i < state1.length; i++) {
+    if (state1[i] !== state2[i]) {
+      return false
+    }
+  }
+  return true
+}
+
 function matchSituationsAreMirrored(state1, state2) {
   //Aktuell nur für 3x3
   const firstRow = state1[0] == state2[2] && state1[2] == state2[0]

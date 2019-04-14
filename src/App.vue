@@ -20,7 +20,12 @@
       <div id="main-rules">
         <h4 class="left-text">Computerregeln</h4>
         <div class="rulesets">
-          <div v-for="(model, index) in computerModel.getModel()" :key="index" class="ruleset">
+          <div
+            v-for="(model, index) in computerModel.getModel()"
+            :key="index"
+            class="ruleset"
+            v-bind:class="{outline: compareStates(model.state, state)}"
+          >
             <PossibleActions
               v-bind:state="model.state"
               v-bind:actions="model.actions"
@@ -44,7 +49,8 @@ import Tour from "./components/Tour.vue";
 import {
   calculatePossibleMoves,
   performMove,
-  checkIfPlayerWins
+  checkIfPlayerWins,
+  compareStates
 } from "./utils/moves.js";
 import LearningModel from "./utils/model.js";
 
@@ -70,6 +76,7 @@ export default {
     };
   },
   methods: {
+    compareStates,
     checkWinner: function(newState, who) {
       if (checkIfPlayerWins(newState, who)) {
         if (who === this.player) {
@@ -92,6 +99,8 @@ export default {
       });
     },
     handleNewState: function(newState) {
+      this.$forceUpdate();
+
       if (this.checkWinner(newState, this.player)) {
         this.computerModel.humanWon();
         this.forceUpdate++;
@@ -173,5 +182,9 @@ export default {
 
 .left-text {
   text-align: left;
+}
+
+.outline {
+  background-color: #ff450057;
 }
 </style>
