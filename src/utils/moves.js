@@ -90,10 +90,11 @@ export function checkIfPlayerWins(state, player) {
 
 export function calculateAllPossibleStatesForPC(initialState) {
   let allStates = calculateAllPossibleStatesHelper(initialState, 0, 1)
-  return allStates
+  allStates = allStates
     .sort((a, b) => a.iteration - b.iteration)
     .map(({ state, iteration }) => (iteration % 2 == 1 ? state : []))
     .filter(state => state.length > 0)
+  return Array.from(new Set(allStates.map(JSON.stringify)), JSON.parse)
 }
 
 function calculateAllPossibleStatesHelper(stateNow, iteration, player) {
