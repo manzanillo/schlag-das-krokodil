@@ -74,7 +74,7 @@ export default {
       usersTurn: true,
       computerModel: new LearningModel([...resetToState]),
       forceUpdate: 1,
-      timeForPC: 4000
+      timeForPC: 3000
     };
   },
   methods: {
@@ -97,7 +97,7 @@ export default {
         message: message,
         type: "info",
         showClose: false,
-        duration: 1500
+        duration: this.timeForPC / 2
       });
     },
     handleNewState: function(newState) {
@@ -109,7 +109,7 @@ export default {
         const self = this;
         setTimeout(function() {
           self.state = [...resetToState];
-        }, this.timeForPC);
+        }, this.timeForPC / 2);
       } else {
         this.state = newState;
         this.active = this.active == this.player ? this.computer : this.player;
@@ -125,7 +125,7 @@ export default {
 
               setTimeout(function() {
                 self.state = [...resetToState];
-              }, self.timeForPC);
+              }, self.timeForPC / 2);
             }
           }, this.timeForPC);
         } else {
