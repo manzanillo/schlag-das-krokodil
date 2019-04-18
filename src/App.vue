@@ -24,7 +24,7 @@
             v-for="(model, index) in computerModel.getModel()"
             :key="index"
             class="ruleset"
-            v-bind:class="{outline: compareStates(model.state, state)}"
+            v-bind:class="{outlinerule: compareStates(model.state, state)}"
           >
             <PossibleActions
               v-bind:state="model.state"
@@ -184,7 +184,7 @@ export default {
   text-align: left;
 }
 
-.outline {
+.outlinerule {
   background-color: #ff450057;
 }
 </style>

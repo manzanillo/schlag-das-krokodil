@@ -15,11 +15,15 @@
         <!-- field is empty -->
         <img v-bind:id="index" src="../assets/white.svg" alt="empty" width="100%">
       </div>
-      <div class="field-slot" v-if="occupation === 1">
+      <div class="field-slot monkey" v-if="occupation === 1">
         <!-- player is occupying field -->
         <img v-bind:id="index" src="../assets/monkey.svg" alt="human" width="100%">
       </div>
-      <div v-bind:class="{'outline': highlights[index]}" class="field-slot" v-if="occupation === 2">
+      <div
+        v-bind:class="{'outline': highlights[index]}"
+        class="field-slot croco"
+        v-if="occupation === 2"
+      >
         <!-- computer is occupying field -->
         <img v-bind:id="index" src="../assets/croco.svg" alt="computer" width="100%">
       </div>
@@ -157,5 +161,12 @@ export default {
 
 .outline {
   border: 5px solid orangered;
+}
+
+.monkey {
+  background-color: #56a8c9;
+}
+.croco {
+  background-color: #a0a0a0;
 }
 </style>
