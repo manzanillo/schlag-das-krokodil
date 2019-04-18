@@ -6,11 +6,27 @@
       <div id="main-game">
         <h4 class="left-text">Spielfeld</h4>
         <DraggableChess :state="this.state" @new-state="handleNewState"/>
-        <p class="left-text">
-          Siege Spieler: {{winsPlayer}}
-          <br>
-          Siege PC: {{winsPC}}
-        </p>
+        <h4 class="left-text">Punkte</h4>
+        <div class="points">
+          <div>
+            <div class="points-svg-container">
+              <svg width="50" height="50" viewBox="0 0 50 50">
+                <image width="50" height="50" xlink:href="./assets/monkey.svg"></image>
+              </svg>
+            </div>
+            <div v-if="displayWin==1" style="float: right; color: green;">+1</div>
+            <div style="width: 50px; margin: 0 auto;">{{winsPlayer}}</div>
+          </div>
+          <div>
+            <div class="points-svg-container">
+              <svg width="50" height="50" viewBox="0 0 50 50">
+                <image width="50" height="50" xlink:href="./assets/croco.svg"></image>
+              </svg>
+            </div>
+            <div v-if="displayWin==2" style="float: right; color: red;">+1</div>
+            <div style="width: 50px; margin: 0 auto;">{{winsPC}}</div>
+          </div>
+        </div>
       </div>
       <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
       <div id="main-rules">
@@ -69,31 +85,32 @@ export default {
       winsPC: 0,
       computerModel: new LearningModel([...resetToState]),
       forceUpdate: 1,
-      timeForPC: 3000
+      timeForPC: 3000,
+      displayWin: 0
     };
   },
   methods: {
     compareStates,
     checkWinner: function(newState, who) {
       if (checkIfPlayerWins(newState, who)) {
+        const self = this;
+
         if (who === this.player) {
-          this.winsPlayer++;
-          this.displayMessage("Du gewinnst!");
+          this.displayWin = 1;
+          setTimeout(function() {
+            self.displayWin = 0;
+            self.winsPlayer++;
+          }, this.timeForPC / 2);
         } else {
-          this.winsPC++;
-          this.displayMessage("Computer gewinnt!");
+          this.displayWin = 2;
+          setTimeout(function() {
+            self.displayWin = 0;
+            self.winsPC++;
+          }, this.timeForPC / 2);
         }
         return true;
       }
       return false;
-    },
-    displayMessage: function(message) {
-      this.$message({
-        message: message,
-        type: "info",
-        showClose: false,
-        duration: this.timeForPC / 2
-      });
     },
     handleNewState: function(newState) {
       this.$forceUpdate();
@@ -186,5 +203,26 @@ export default {
 
 .outlinerule {
   background-color: #ff450057;
+}
+
+.points {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 50px;
+}
+
+.points > div {
+  width: 75%;
+}
+
+.points-svg-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.points-svg-container > svg {
+  margin: 0 auto;
+  display: block;
 }
 </style>
