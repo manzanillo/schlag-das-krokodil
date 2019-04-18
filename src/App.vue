@@ -108,8 +108,6 @@ export default {
         this.forceUpdate++;
         const self = this;
         setTimeout(function() {
-          console.log(resetToState);
-
           self.state = [...resetToState];
         }, this.timeForPC);
       } else {
@@ -126,8 +124,6 @@ export default {
               self.forceUpdate++;
 
               setTimeout(function() {
-                console.log(resetToState);
-
                 self.state = [...resetToState];
               }, self.timeForPC);
             }
@@ -142,7 +138,6 @@ export default {
   mounted: function() {
     let uri = window.location.search.substring(1);
     let params = new URLSearchParams(uri);
-    console.log(params.get("time"));
     if (params.get("time")) {
       this.timeForPC = params.get("time");
     }
