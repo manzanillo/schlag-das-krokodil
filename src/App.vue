@@ -53,6 +53,7 @@ import {
   compareStates
 } from "./utils/moves.js";
 import LearningModel from "./utils/model.js";
+import { isNull } from "util";
 
 export default {
   name: "app",
@@ -72,7 +73,8 @@ export default {
       winsPC: 0,
       usersTurn: true,
       computerModel: new LearningModel([...resetToState]),
-      forceUpdate: 1
+      forceUpdate: 1,
+      timeForPC: 4000
     };
   },
   methods: {
@@ -109,7 +111,7 @@ export default {
           console.log(resetToState);
 
           self.state = [...resetToState];
-        }, 1000);
+        }, this.timeForPC);
       } else {
         this.state = newState;
         this.active = this.active == this.player ? this.computer : this.player;
@@ -127,14 +129,22 @@ export default {
                 console.log(resetToState);
 
                 self.state = [...resetToState];
-              }, 1000);
+              }, self.timeForPC);
             }
-          }, 1000);
+          }, this.timeForPC);
         } else {
           // allow human to interact with the figures
         }
         this.active = this.active == this.player ? this.computer : this.player;
       }
+    }
+  },
+  mounted: function() {
+    let uri = window.location.search.substring(1);
+    let params = new URLSearchParams(uri);
+    console.log(params.get("time"));
+    if (params.get("time")) {
+      this.timeForPC = params.get("time");
     }
   }
 };
