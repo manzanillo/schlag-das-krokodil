@@ -5,11 +5,7 @@
     <div id="main-view">
       <div id="main-game">
         <h4 class="left-text">Spielfeld</h4>
-        <DraggableChess
-          :state="this.state"
-          :usersTurn="this.usersTurn"
-          @new-state="handleNewState"
-        />
+        <DraggableChess :state="this.state" @new-state="handleNewState"/>
         <p class="left-text">
           Siege Spieler: {{winsPlayer}}
           <br>
@@ -71,7 +67,6 @@ export default {
       active: 1,
       winsPlayer: 0,
       winsPC: 0,
-      usersTurn: true,
       computerModel: new LearningModel([...resetToState]),
       forceUpdate: 1,
       timeForPC: 3000

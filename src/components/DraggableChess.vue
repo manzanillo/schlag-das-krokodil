@@ -42,18 +42,21 @@ export default {
   name: "DraggableChess",
   components: {},
   props: {
-    state: Array,
-    usersTurn: Boolean
+    state: Array
   },
   data() {
     return {
       currentState: this.state,
       currentlyDragging: null,
+      playerIsAllowedToMove: true,
       highlights: new Array(this.state.length).fill(false)
     };
   },
   methods: {
     handleMove: function(e) {
+      if (!this.playerIsAllowedToMove) {
+        return;
+      }
       if (e instanceof MouseEvent) {
         return;
       }
@@ -77,6 +80,9 @@ export default {
       //console.log(e);
     },
     endHandler: function(e) {
+      if (!this.playerIsAllowedToMove) {
+        return;
+      }
       var touchEndedHere = e.changedTouches[0];
 
       const fields = this.$refs.fieldslot;
@@ -99,6 +105,9 @@ export default {
       this.$forceUpdate();
     },
     handleDrop: function(e) {
+      if (!this.playerIsAllowedToMove) {
+        return;
+      }
       //remove all highlights
       this.highlights.fill(false);
       this.$forceUpdate();
@@ -116,10 +125,14 @@ export default {
         this.currentState[this.currentlyDragging.id] = 0;
         this.currentState[to] = placeholder;
         this.$forceUpdate();
+        this.playerIsAllowedToMove = false;
         this.$emit("new-state", this.currentState);
       }
     },
     handleDrag: function(e) {
+      if (!this.playerIsAllowedToMove) {
+        return;
+      }
       this.currentlyDragging = e.srcElement;
       if (this.currentState[this.currentlyDragging.id] == 1) {
         // it belongs to a human, show where to place it
@@ -140,6 +153,7 @@ export default {
   watch: {
     state: function(newVal, oldVal) {
       this.currentState = newVal;
+      this.playerIsAllowedToMove = true;
     }
   }
 };
