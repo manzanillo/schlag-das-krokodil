@@ -5,13 +5,13 @@
     <div id="main-view">
       <div id="main-game">
         <h4 class="left-text">Spielfeld</h4>
-        <DraggableChess :state="this.state" @new-state="handleNewState"/>
+        <DraggableChess :state="this.state" @new-state="handleNewState" />
         <h4 class="left-text">Punkte</h4>
         <div class="points">
           <div>
             <div class="points-svg-container">
               <svg width="50" height="50" viewBox="0 0 50 50">
-                <image width="50" height="50" xlink:href="./assets/monkey.svg"></image>
+                <image width="50" height="50" xlink:href="./assets/monkey.svg" />
               </svg>
             </div>
             <div v-if="displayWin==1" style="float: right; color: green;">+1</div>
@@ -20,7 +20,7 @@
           <div>
             <div class="points-svg-container">
               <svg width="50" height="50" viewBox="0 0 50 50">
-                <image width="50" height="50" xlink:href="./assets/croco.svg"></image>
+                <image width="50" height="50" xlink:href="./assets/croco.svg" />
               </svg>
             </div>
             <div v-if="displayWin==2" style="float: right; color: red;">+1</div>
@@ -43,12 +43,14 @@
               v-bind:actions="model.actions"
               v-bind:sweets="model.sweets"
               v-bind:forceUpdate="forceUpdate"
+              v-bind:currentState="compareStates(model.state, state)"
+              v-bind:chosenPlayType="chosenPlayType"
             />
           </div>
         </div>
       </div>
     </div>
-    <Tour/>
+    <Tour />
   </div>
 </template>
 
@@ -86,7 +88,8 @@ export default {
       computerModel: new LearningModel([...resetToState]),
       forceUpdate: 1,
       timeForPC: 3000,
-      displayWin: 0
+      displayWin: 0,
+      chosenPlayType: -1
     };
   },
   methods: {
@@ -126,10 +129,14 @@ export default {
         this.state = newState;
         this.active = this.active == this.player ? this.computer : this.player;
         if (this.active === this.computer) {
-          const move = this.computerModel.choosePlayType(this.state);
+          const [move, sweetChosen] = this.computerModel.choosePlayType(
+            this.state
+          );
+          this.chosenPlayType = sweetChosen;
           const stateAfterPCMove = performMove(this.state, move);
           const self = this;
           setTimeout(function() {
+            self.chosenPlayType = -1;
             self.state = stateAfterPCMove;
             if (self.checkWinner(stateAfterPCMove, self.computer)) {
               self.computerModel.computerWon();

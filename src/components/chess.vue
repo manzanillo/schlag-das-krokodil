@@ -11,7 +11,7 @@
           orient="auto"
           markerUnits="strokeWidth"
         >
-          <path d="M0,0 L0,4 L5,2 z" fill="#f00"></path>
+          <path d="M0,0 L0,4 L5,2 z" fill="#f00" />
         </marker>
         <marker
           id="arrow-green"
@@ -22,7 +22,7 @@
           orient="auto"
           markerUnits="strokeWidth"
         >
-          <path d="M0,0 L0,4 L5,2 z" fill="#0f0"></path>
+          <path d="M0,0 L0,4 L5,2 z" fill="#0f0" />
         </marker>
         <marker
           id="arrow-blue"
@@ -33,7 +33,7 @@
           orient="auto"
           markerUnits="strokeWidth"
         >
-          <path d="M0,0 L0,4 L5,2 z" fill="#00f"></path>
+          <path d="M0,0 L0,4 L5,2 z" fill="#00f" />
         </marker>
         <marker
           id="arrow-yellow"
@@ -44,7 +44,7 @@
           orient="auto"
           markerUnits="strokeWidth"
         >
-          <path d="M0,0 L0,4 L5,2 z" fill="#ff0"></path>
+          <path d="M0,0 L0,4 L5,2 z" fill="#ffa500" />
         </marker>
         <marker
           id="arrow-purple"
@@ -55,7 +55,7 @@
           orient="auto"
           markerUnits="strokeWidth"
         >
-          <path d="M0,0 L0,4 L5,2 z" fill="#80f"></path>
+          <path d="M0,0 L0,4 L5,2 z" fill="#80f" />
         </marker>
       </defs>
 
@@ -69,7 +69,7 @@
           stroke="lightgray"
           style="fill:rgb(255,255,255)"
           stroke-width="1"
-        ></rect>
+        />
 
         <image
           v-if="occupation === 1"
@@ -78,7 +78,7 @@
           :x="dimension/3 * (index % 3)"
           :y="dimension/3 * (Math.floor(index / 3))"
           xlink:href="../assets/monkey.svg"
-        ></image>
+        />
 
         <image
           v-if="occupation === 2"
@@ -87,7 +87,7 @@
           :x="dimension/3 * (index % 3)"
           :y="dimension/3 * (Math.floor(index / 3))"
           xlink:href="../assets/croco.svg"
-        ></image>
+        />
       </g>
       <g v-for="(action, index) in actions" :key="index">
         <line
@@ -98,7 +98,7 @@
           :stroke="colors[index].hex"
           stroke-width="3"
           :marker-end="colors[index].name"
-        ></line>
+        />
       </g>
     </svg>
   </div>
@@ -118,7 +118,7 @@ export default {
         { name: "url(#arrow-blue)", hex: "#00f", fill: "blue" },
         { name: "url(#arrow-red)", hex: "#f00", fill: "red" },
         { name: "url(#arrow-green)", hex: "#0f0", fill: "green" },
-        { name: "url(#arrow-yellow)", hex: "#ff0", fill: "yellow" },
+        { name: "url(#arrow-yellow)", hex: "#ffa500", fill: "orange" },
         { name: "url(#arrow-purple)", hex: "#80f", fill: "purple" }
       ]
     };

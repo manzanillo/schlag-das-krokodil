@@ -53,7 +53,7 @@ export default class LearningModel {
       ]
     this.lastSituation = indexForState
     this.lastActionTaken = selectedMove
-    return this.model[indexForState].actions[selectedMove]
+    return [this.model[indexForState].actions[selectedMove], selectedMove]
   }
 
   updateModel(computerWon) {

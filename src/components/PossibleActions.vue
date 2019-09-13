@@ -1,6 +1,6 @@
 <template id="chessground">
   <div class="actions-field">
-    <Chess v-bind:state="state" v-bind:dimension="dimension" v-bind:actions="actions"/>
+    <Chess v-bind:state="state" v-bind:dimension="dimension" v-bind:actions="actions" />
     <div class="actions-rating">
       <svg :width="dimension" :height="dimension">
         <g v-for="(sweet, index) in sweets" :key="index">
@@ -10,7 +10,19 @@
               :cy="dimension/4 * (i-1) + dimension/Math.pow(2, sweet)"
               r="10"
               :fill="colors[index].fill"
-            ></circle>
+            />
+            <animateMotion
+              v-if="currentState && index != chosenPlayType"
+              path="M 0 0 V -10 V -5 V -2 Z"
+              dur="0.5s"
+              repeatCount="indefinite"
+            />
+            <animateMotion
+              v-if="currentState && index == chosenPlayType"
+              path="M 0 0 V -10 V -30 Z"
+              dur="0.5s"
+              repeatCount="indefinite"
+            />
           </g>
         </g>
       </svg>
@@ -30,7 +42,9 @@ export default {
     state: Array,
     actions: Array,
     sweets: Array,
-    forceUpdate: Number
+    forceUpdate: Number,
+    currentState: Boolean,
+    chosenPlayType: Number
   },
   data: function() {
     return {
@@ -38,7 +52,7 @@ export default {
         { name: "url(#arrow-blue)", hex: "#00f", fill: "blue" },
         { name: "url(#arrow-red)", hex: "#f00", fill: "red" },
         { name: "url(#arrow-green)", hex: "#0f0", fill: "green" },
-        { name: "url(#arrow-yellow)", hex: "#ff0", fill: "yellow" },
+        { name: "url(#arrow-yellow)", hex: "#ffa500", fill: "orange" },
         { name: "url(#arrow-purple)", hex: "#80f", fill: "purple" }
       ],
       dimension: 90,
@@ -49,7 +63,8 @@ export default {
   watch: {
     forceUpdate: function(newVal, oldVal) {
       this.forceUpdateHelper = newVal;
-    }
+    },
+    chosenPlayType: function(newVal, oldVal) {}
   }
 };
 </script>
