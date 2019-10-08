@@ -13,7 +13,10 @@ export default class LearningModel {
         sweets: new Array(possibleMoves.length).fill(1)
       }
     })
+    // actually ... one should do this with an array
+    this.lastlastSituation = -2
     this.lastSituation = -1
+    this.lastlastActionTaken = -2
     this.lastActionTaken = -1
   }
 
@@ -51,7 +54,9 @@ export default class LearningModel {
       arrayForRandomSelect[
         Math.floor(Math.random() * arrayForRandomSelect.length)
       ]
+    this.lastlastSituation = this.lastSituation
     this.lastSituation = indexForState
+    this.lastlastActionTaken = this.lastActionTaken
     this.lastActionTaken = selectedMove
     return [this.model[indexForState].actions[selectedMove], selectedMove]
   }
@@ -67,6 +72,12 @@ export default class LearningModel {
     } else {
       if (this.model[this.lastSituation].sweets[this.lastActionTaken] > 0) {
         this.model[this.lastSituation].sweets[this.lastActionTaken]--
+      } else if (
+        this.model[this.lastSituation].sweets[this.lastActionTaken] == 0 &&
+        this.model[this.lastlastSituation].sweets[this.lastlastActionTaken] > 0
+      ) {
+        console.log('hi')
+        this.model[this.lastlastSituation].sweets[this.lastlastActionTaken]--
       }
     }
   }
