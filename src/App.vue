@@ -61,6 +61,7 @@
               v-bind:forceUpdate="forceUpdate"
               v-bind:currentState="compareStates(model.state, state)"
               v-bind:chosenPlayType="chosenPlayType"
+              v-bind:halloween="halloween"
             />
           </div>
         </div>

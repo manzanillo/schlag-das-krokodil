@@ -72,7 +72,25 @@
         />
 
         <image
-          v-if="occupation === 1"
+          v-if="occupation === 1 && halloween"
+          :width="dimension/3"
+          :height="dimension/3"
+          :x="dimension/3 * (index % 3)"
+          :y="dimension/3 * (Math.floor(index / 3))"
+          xlink:href="../assets/monkey-halloween.svg"
+        />
+
+        <image
+          v-if="occupation === 2 && halloween"
+          :width="dimension/3"
+          :height="dimension/3"
+          :x="dimension/3 * (index % 3)"
+          :y="dimension/3 * (Math.floor(index / 3))"
+          xlink:href="../assets/croco-halloween.svg"
+        />
+
+        <image
+          v-if="occupation === 1 && !halloween"
           :width="dimension/3"
           :height="dimension/3"
           :x="dimension/3 * (index % 3)"
@@ -81,7 +99,7 @@
         />
 
         <image
-          v-if="occupation === 2"
+          v-if="occupation === 2 && !halloween"
           :width="dimension/3"
           :height="dimension/3"
           :x="dimension/3 * (index % 3)"
@@ -110,7 +128,8 @@ export default {
   props: {
     state: Array,
     dimension: { type: Number, default: 180 },
-    actions: Array
+    actions: Array,
+    halloween: Boolean
   },
   data: function() {
     return {

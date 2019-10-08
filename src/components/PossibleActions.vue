@@ -1,6 +1,11 @@
 <template id="chessground">
   <div class="actions-field">
-    <Chess v-bind:state="state" v-bind:dimension="dimension" v-bind:actions="actions" />
+    <Chess
+      v-bind:state="state"
+      v-bind:dimension="dimension"
+      v-bind:actions="actions"
+      v-bind:halloween="halloween"
+    />
     <div class="actions-rating">
       <svg :width="dimension" :height="dimension">
         <g v-for="(sweet, index) in sweets" :key="index">
@@ -44,7 +49,8 @@ export default {
     sweets: Array,
     forceUpdate: Number,
     currentState: Boolean,
-    chosenPlayType: Number
+    chosenPlayType: Number,
+    halloween: Boolean
   },
   data: function() {
     return {
