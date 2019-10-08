@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <Tour />
+    <Tour :halloween="this.halloween" />
   </div>
 </template>
 

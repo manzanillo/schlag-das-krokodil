@@ -1,10 +1,14 @@
 <template id="tour">
-  <v-tour name="myTour" :steps="steps" :options="myOptions"></v-tour>
+  <v-tour v-if="halloween" name="myTourHalloween" :steps="stepsHalloween" :options="myOptions"></v-tour>
+  <v-tour v-else name="myTour" :steps="steps" :options="myOptions"></v-tour>
 </template>
 
 <script>
 export default {
   name: "Tour",
+  props: {
+    halloween: Boolean
+  },
   data() {
     return {
       myOptions: {
@@ -32,6 +36,32 @@ export default {
         {
           target: "img:first-of-type",
           content: "Bewege ein Äffchen via <strong>Drag-and-Drop!</strong>"
+        },
+        {
+          target: "#main-rules>h4",
+          content:
+            "Der Computer sucht die passende Regel und wählt zufällig eine farbige Schokolinse. Aber sei gewarnt, mit der Zeit wird er immer besser.",
+          params: {
+            placement: "left"
+          }
+        }
+      ],
+      stepsHalloween: [
+        {
+          target: "#main-game>h4", // We're using document.querySelector() under the hood
+          content: `Du spielst die <strong>Kürbisse</strong>! Du gewinnst, wenn
+          <ul style="text-align: left;">
+          <li>eine deiner Figuren ans andere Ende des Bretts gelangt.</li>
+          <li>der Gegner nicht mehr ziehen kann.</li>
+          <li>oder du alle gegnerischen Figuren schlägst.</li>
+          </ul>`,
+          params: {
+            placement: "right"
+          }
+        },
+        {
+          target: "img:first-of-type",
+          content: "Bewege einen Kürbis via <strong>Drag-and-Drop!</strong>"
         },
         {
           target: "#main-rules>h4",
