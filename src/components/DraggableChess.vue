@@ -13,11 +13,18 @@
     >
       <div v-bind:class="{outline: highlights[index]}" class="field-slot" v-if="occupation === 0">
         <!-- field is empty -->
-        <img v-bind:id="index" src="../assets/white.svg" alt="empty" width="100%">
+        <img v-bind:id="index" src="../assets/white.svg" alt="empty" width="100%" />
       </div>
       <div class="field-slot monkey" v-if="occupation === 1">
         <!-- player is occupying field -->
-        <img v-bind:id="index" src="../assets/monkey.svg" alt="human" width="100%">
+        <img
+          v-if="halloween"
+          v-bind:id="index"
+          src="../assets/monkey-halloween.svg"
+          alt="human"
+          width="100%"
+        />
+        <img v-else v-bind:id="index" src="../assets/monkey.svg" alt="human" width="100%" />
       </div>
       <div
         v-bind:class="{'outline': highlights[index]}"
@@ -25,7 +32,14 @@
         v-if="occupation === 2"
       >
         <!-- computer is occupying field -->
-        <img v-bind:id="index" src="../assets/croco.svg" alt="computer" width="100%">
+        <img
+          v-if="halloween"
+          v-bind:id="index"
+          src="../assets/croco-halloween.svg"
+          alt="computer"
+          width="100%"
+        />
+        <img v-else v-bind:id="index" src="../assets/croco.svg" alt="computer" width="100%" />
       </div>
     </div>
   </div>
@@ -42,7 +56,8 @@ export default {
   name: "DraggableChess",
   components: {},
   props: {
-    state: Array
+    state: Array,
+    halloween: Boolean
   },
   data() {
     return {

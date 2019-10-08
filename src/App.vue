@@ -5,13 +5,23 @@
     <div id="main-view">
       <div id="main-game">
         <h4 class="left-text">Spielfeld</h4>
-        <DraggableChess :state="this.state" @new-state="handleNewState" />
+        <DraggableChess
+          :state="this.state"
+          @new-state="handleNewState"
+          :halloween="this.halloween"
+        />
         <h4 class="left-text">Punkte</h4>
         <div class="points">
           <div>
             <div class="points-svg-container">
               <svg width="50" height="50" viewBox="0 0 50 50">
-                <image width="50" height="50" xlink:href="./assets/monkey.svg" />
+                <image
+                  v-if="halloween"
+                  width="50"
+                  height="50"
+                  xlink:href="./assets/monkey-halloween.svg"
+                />
+                <image v-else width="50" height="50" xlink:href="./assets/monkey.svg" />
               </svg>
             </div>
             <div v-if="displayWin==1" style="float: right; color: green;">+1</div>
@@ -20,7 +30,13 @@
           <div>
             <div class="points-svg-container">
               <svg width="50" height="50" viewBox="0 0 50 50">
-                <image width="50" height="50" xlink:href="./assets/croco.svg" />
+                <image
+                  v-if="halloween"
+                  width="50"
+                  height="50"
+                  xlink:href="./assets/croco-halloween.svg"
+                />
+                <image v-else width="50" height="50" xlink:href="./assets/croco.svg" />
               </svg>
             </div>
             <div v-if="displayWin==2" style="float: right; color: red;">+1</div>
@@ -56,23 +72,19 @@
 
 <script>
 const resetToState = [1, 1, 1, 0, 0, 0, 2, 2, 2];
-import Chess from "./components/chess.vue";
 import DraggableChess from "./components/DraggableChess.vue";
 import PossibleActions from "./components/PossibleActions.vue";
 import Tour from "./components/Tour.vue";
 import {
-  calculatePossibleMoves,
   performMove,
   checkIfPlayerWins,
   compareStates
 } from "./utils/moves.js";
 import LearningModel from "./utils/model.js";
-import { isNull } from "util";
 
 export default {
   name: "app",
   components: {
-    Chess,
     DraggableChess,
     PossibleActions,
     Tour
@@ -89,7 +101,8 @@ export default {
       forceUpdate: 1,
       timeForPC: 3000,
       displayWin: 0,
-      chosenPlayType: -1
+      chosenPlayType: -1,
+      halloween: false
     };
   },
   methods: {
@@ -159,6 +172,10 @@ export default {
     let params = new URLSearchParams(uri);
     if (params.get("time")) {
       this.timeForPC = params.get("time");
+    }
+
+    if (params.get("halloween")) {
+      this.halloween = true;
     }
   }
 };
