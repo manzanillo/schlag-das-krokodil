@@ -72,12 +72,21 @@ export default class LearningModel {
     } else {
       if (this.model[this.lastSituation].sweets[this.lastActionTaken] > 0) {
         this.model[this.lastSituation].sweets[this.lastActionTaken]--
-      } else if (
-        this.model[this.lastSituation].sweets[this.lastActionTaken] == 0 &&
-        this.model[this.lastlastSituation].sweets[this.lastlastActionTaken] > 0
-      ) {
-        console.log('hi')
-        this.model[this.lastlastSituation].sweets[this.lastlastActionTaken]--
+
+        let allSweetsGone = true
+        for (let i = 0; i < this.model[this.lastSituation].sweets.length; i++) {
+          if (this.model[this.lastSituation].sweets[i] > 0) {
+            allSweetsGone = false
+          }
+        }
+
+        if (
+          allSweetsGone &&
+          this.model[this.lastlastSituation].sweets[this.lastlastActionTaken] >
+            0
+        ) {
+          this.model[this.lastlastSituation].sweets[this.lastlastActionTaken]--
+        }
       }
     }
   }
