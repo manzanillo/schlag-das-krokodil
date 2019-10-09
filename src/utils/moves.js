@@ -104,10 +104,7 @@ function calculateAllPossibleStatesHelper(stateNow, iteration, player) {
   const possibleMoves = calculatePossibleMoves([...stateNow], player, direction)
   for (let i = 0; i < possibleMoves.length; i++) {
     const newState = performMove(stateNow, possibleMoves[i])
-    if (
-      !checkIfPlayerWins(newState, player) &&
-      !checkIfPlayerWins(newState, opponent)
-    ) {
+    if (!checkIfPlayerWins(newState, player)) {
       const additionalStates = calculateAllPossibleStatesHelper(
         newState,
         iteration + 1,
