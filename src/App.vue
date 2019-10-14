@@ -46,7 +46,18 @@
       </div>
       <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
       <div id="main-rules">
-        <h4 class="left-text">Computerregeln</h4>
+        <div class="row">
+          <h4 class="left-text">Computerregeln</h4>
+          <!-- Rounded switch -->
+          <div class="limit-options-btn">
+            <div>Nur mögliche Züge</div>
+            <label class="switch">
+              <input type="checkbox" v-on:click="clickSwitch" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
         <div class="rulesets">
           <div
             v-for="(model, index) in computerModel.getModel()"
@@ -55,6 +66,7 @@
             v-bind:class="{outlinerule: compareStates(model.state, state)}"
           >
             <PossibleActions
+              v-if="!filter || checkIfStateIsContained(filteredStates, model.state) "
               v-bind:state="model.state"
               v-bind:actions="model.actions"
               v-bind:sweets="model.sweets"
@@ -79,7 +91,9 @@ import Tour from "./components/Tour.vue";
 import {
   performMove,
   checkIfPlayerWins,
-  compareStates
+  compareStates,
+  checkIfStateIsContained,
+  calculatePossibleMoves
 } from "./utils/moves.js";
 import LearningModel from "./utils/model.js";
 
@@ -103,11 +117,17 @@ export default {
       timeForPC: 3000,
       displayWin: 0,
       chosenPlayType: -1,
-      halloween: false
+      halloween: false,
+      filteredStates: [],
+      filter: false
     };
   },
   methods: {
     compareStates,
+    checkIfStateIsContained,
+    clickSwitch: function(evt) {
+      this.filter = !this.filter;
+    },
     checkWinner: function(newState, who) {
       if (checkIfPlayerWins(newState, who)) {
         const self = this;
@@ -129,6 +149,14 @@ export default {
       }
       return false;
     },
+    updateSelection: function() {
+      let relevantStates = [];
+      const moves = calculatePossibleMoves(this.state, this.player);
+      for (let index in moves) {
+        relevantStates.push(performMove([...this.state], moves[index]));
+      }
+      this.filteredStates = relevantStates;
+    },
     handleNewState: function(newState) {
       this.$forceUpdate();
 
@@ -138,6 +166,7 @@ export default {
         const self = this;
         setTimeout(function() {
           self.state = [...resetToState];
+          self.updateSelection();
         }, this.timeForPC / 2);
       } else {
         this.state = newState;
@@ -152,12 +181,14 @@ export default {
           setTimeout(function() {
             self.chosenPlayType = -1;
             self.state = stateAfterPCMove;
+            self.updateSelection();
             if (self.checkWinner(stateAfterPCMove, self.computer)) {
               self.computerModel.computerWon();
               self.forceUpdate++;
 
               setTimeout(function() {
                 self.state = [...resetToState];
+                self.updateSelection();
               }, self.timeForPC / 2);
             }
           }, this.timeForPC);
@@ -178,6 +209,8 @@ export default {
     if (params.get("halloween")) {
       this.halloween = true;
     }
+
+    this.updateSelection();
   }
 };
 </script>
@@ -249,5 +282,79 @@ export default {
 .points-svg-container > svg {
   margin: 0 auto;
   display: block;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.limit-options-btn {
+  margin-top: 0.5em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 1em;
 }
 </style>

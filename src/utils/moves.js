@@ -149,6 +149,15 @@ export function compareStates(state1, state2) {
   return true
 }
 
+export function checkIfStateIsContained(states, state) {
+  for (let i = 0; i < states.length; i++) {
+    if (compareStates(states[i], state)) {
+      return true
+    }
+  }
+  return false
+}
+
 function matchSituationsAreMirrored(state1, state2) {
   //Aktuell nur für 3x3
   const firstRow = state1[0] == state2[2] && state1[2] == state2[0]
