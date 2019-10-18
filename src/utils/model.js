@@ -88,6 +88,10 @@ export default class LearningModel {
           this.model[this.lastlastSituation].sweets[this.lastlastActionTaken]--
         }
       }
+      if (this.lastActionTaken === undefined) {
+        // Letzer Zustand hatte kein Token mehr;
+        this.model[this.lastlastSituation].sweets[this.lastlastActionTaken]--
+      }
     }
   }
 

@@ -175,23 +175,35 @@ export default {
           const [move, sweetChosen] = this.computerModel.choosePlayType(
             this.state
           );
-          this.chosenPlayType = sweetChosen;
-          const stateAfterPCMove = performMove(this.state, move);
-          const self = this;
-          setTimeout(function() {
-            self.chosenPlayType = -1;
-            self.state = stateAfterPCMove;
-            self.updateSelection();
-            if (self.checkWinner(stateAfterPCMove, self.computer)) {
-              self.computerModel.computerWon();
-              self.forceUpdate++;
+          if (move === undefined) {
+            this.computerModel.humanWon();
+            this.forceUpdate++;
+            this.winsPlayer++;
 
-              setTimeout(function() {
-                self.state = [...resetToState];
-                self.updateSelection();
-              }, self.timeForPC / 2);
-            }
-          }, this.timeForPC);
+            const self = this;
+
+            setTimeout(function() {
+              self.state = [...resetToState];
+              self.updateSelection();
+            }, self.timeForPC * 1.5);
+          } else {
+            this.chosenPlayType = sweetChosen;
+            const stateAfterPCMove = performMove(this.state, move);
+            const self = this;
+            setTimeout(function() {
+              self.chosenPlayType = -1;
+              self.state = stateAfterPCMove;
+              if (self.checkWinner(stateAfterPCMove, self.computer)) {
+                self.computerModel.computerWon();
+                self.forceUpdate++;
+
+                setTimeout(function() {
+                  self.state = [...resetToState];
+                  self.updateSelection();
+                }, self.timeForPC * 1.5);
+              }
+            }, this.timeForPC);
+          }
         } else {
           // allow human to interact with the figures
         }
