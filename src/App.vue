@@ -193,6 +193,7 @@ export default {
             setTimeout(function() {
               self.chosenPlayType = -1;
               self.state = stateAfterPCMove;
+              self.updateSelection();
               if (self.checkWinner(stateAfterPCMove, self.computer)) {
                 self.computerModel.computerWon();
                 self.forceUpdate++;
