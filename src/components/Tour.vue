@@ -38,11 +38,21 @@ export default {
           content: "Bewege ein Äffchen via <strong>Drag-and-Drop!</strong>"
         },
         {
-          target: "#main-rules>h4",
+          target: "#main-rules>div>h4",
           content:
             "Der Computer sucht die passende Regel und wählt zufällig eine farbige Schokolinse. Aber sei gewarnt, mit der Zeit wird er immer besser.",
           params: {
             placement: "left"
+          }
+        },
+        {
+          target: ".limit-options-btn",
+          content: `Mithilfe dieser Schaltfläche kannst du dir nur jene Regeln anzeigen lassen, die <ul style="text-align: left;">
+          <li>direkt auf deinen nächsten Zug folgen könnten</li>
+          <li>und in denen der Computer noch nicht verloren hat.</li>
+            </ul>`,
+          params: {
+            placement: "bottom"
           }
         }
       ],
@@ -64,11 +74,21 @@ export default {
           content: "Bewege einen Kürbis via <strong>Drag-and-Drop!</strong>"
         },
         {
-          target: "#main-rules>h4",
+          target: "#main-rules>div>h4",
           content:
             "Der Computer sucht die passende Regel und wählt zufällig eine farbige Schokolinse. Aber sei gewarnt, mit der Zeit wird er immer besser.",
           params: {
             placement: "left"
+          }
+        },
+        {
+          target: ".limit-options-btn",
+          content: `Mithilfe dieser Schaltfläche kannst du dir nur jene Regeln anzeigen lassen, die <ul style="text-align: left;">
+          <li>direkt auf deinen nächsten Zug folgen könnten</li>
+          <li>und in denen der Computer noch nicht verloren hat.</li>
+            </ul>`,
+          params: {
+            placement: "bottom"
           }
         }
       ]
