@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <h1>Reinforcement Learning - Schlag das Krokodil</h1>
+    <h1>
+      {{ $t("Reinforcement Learning - Beat the Crocodile") }}
+    </h1>
 
     <div id="main-view">
       <div id="main-game">
-        <h4 class="left-text">Spielfeld</h4>
+        <h4 class="left-text">{{ $t("Board") }}</h4>
         <DraggableChess
           :state="this.state"
           @new-state="handleNewState"
           :halloween="this.halloween"
         />
-        <h4 class="left-text">Punkte</h4>
+        <h4 class="left-text">{{ $t("Score") }}</h4>
         <div class="points">
           <div>
             <div class="points-svg-container">
@@ -21,11 +23,18 @@
                   height="50"
                   xlink:href="./assets/monkey-halloween.svg"
                 />
-                <image v-else width="50" height="50" xlink:href="./assets/monkey.svg" />
+                <image
+                  v-else
+                  width="50"
+                  height="50"
+                  xlink:href="./assets/monkey.svg"
+                />
               </svg>
             </div>
-            <div v-if="displayWin==1" style="float: right; color: green;">+1</div>
-            <div style="width: 50px; margin: 0 auto;">{{winsPlayer}}</div>
+            <div v-if="displayWin == 1" style="float: right; color: green;">
+              +1
+            </div>
+            <div style="width: 50px; margin: 0 auto;">{{ winsPlayer }}</div>
           </div>
           <div>
             <div class="points-svg-container">
@@ -36,21 +45,28 @@
                   height="50"
                   xlink:href="./assets/croco-halloween.svg"
                 />
-                <image v-else width="50" height="50" xlink:href="./assets/croco.svg" />
+                <image
+                  v-else
+                  width="50"
+                  height="50"
+                  xlink:href="./assets/croco.svg"
+                />
               </svg>
             </div>
-            <div v-if="displayWin==2" style="float: right; color: red;">+1</div>
-            <div style="width: 50px; margin: 0 auto;">{{winsPC}}</div>
+            <div v-if="displayWin == 2" style="float: right; color: red;">
+              +1
+            </div>
+            <div style="width: 50px; margin: 0 auto;">{{ winsPC }}</div>
           </div>
         </div>
       </div>
       <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
       <div id="main-rules">
         <div class="row">
-          <h4 class="left-text">Computerregeln</h4>
+          <h4 class="left-text">{{ $t("Computer rules") }}</h4>
           <!-- Rounded switch -->
           <div class="limit-options-btn">
-            <div>Nur mögliche Züge</div>
+            <div>{{ $t("Only possible moves") }}</div>
             <label class="switch">
               <input type="checkbox" v-on:click="clickSwitch" />
               <span class="slider round"></span>
@@ -63,10 +79,12 @@
             v-for="(model, index) in computerModel.getModel()"
             :key="index"
             class="ruleset"
-            v-bind:class="{outlinerule: compareStates(model.state, state)}"
+            v-bind:class="{ outlinerule: compareStates(model.state, state) }"
           >
             <PossibleActions
-              v-if="!filter || checkIfStateIsContained(filteredStates, model.state) "
+              v-if="
+                !filter || checkIfStateIsContained(filteredStates, model.state)
+              "
               v-bind:state="model.state"
               v-bind:actions="model.actions"
               v-bind:sweets="model.sweets"
@@ -84,25 +102,25 @@
 </template>
 
 <script>
-const resetToState = [1, 1, 1, 0, 0, 0, 2, 2, 2];
-import DraggableChess from "./components/DraggableChess.vue";
-import PossibleActions from "./components/PossibleActions.vue";
-import Tour from "./components/Tour.vue";
+const resetToState = [1, 1, 1, 0, 0, 0, 2, 2, 2]
+import DraggableChess from "./components/DraggableChess.vue"
+import PossibleActions from "./components/PossibleActions.vue"
+import Tour from "./components/Tour.vue"
 import {
   performMove,
   checkIfPlayerWins,
   compareStates,
   checkIfStateIsContained,
-  calculatePossibleMoves
-} from "./utils/moves.js";
-import LearningModel from "./utils/model.js";
+  calculatePossibleMoves,
+} from "./utils/moves.js"
+import LearningModel from "./utils/model.js"
 
 export default {
   name: "app",
   components: {
     DraggableChess,
     PossibleActions,
-    Tour
+    Tour,
   },
   data: function() {
     return {
@@ -119,113 +137,113 @@ export default {
       chosenPlayType: -1,
       halloween: false,
       filteredStates: [],
-      filter: false
-    };
+      filter: false,
+    }
   },
   methods: {
     compareStates,
     checkIfStateIsContained,
     clickSwitch: function(evt) {
-      this.filter = !this.filter;
+      this.filter = !this.filter
     },
     checkWinner: function(newState, who) {
       if (checkIfPlayerWins(newState, who)) {
-        const self = this;
+        const self = this
 
         if (who === this.player) {
-          this.displayWin = 1;
+          this.displayWin = 1
           setTimeout(function() {
-            self.displayWin = 0;
-            self.winsPlayer++;
-          }, this.timeForPC / 2);
+            self.displayWin = 0
+            self.winsPlayer++
+          }, this.timeForPC / 2)
         } else {
-          this.displayWin = 2;
+          this.displayWin = 2
           setTimeout(function() {
-            self.displayWin = 0;
-            self.winsPC++;
-          }, this.timeForPC / 2);
+            self.displayWin = 0
+            self.winsPC++
+          }, this.timeForPC / 2)
         }
-        return true;
+        return true
       }
-      return false;
+      return false
     },
     updateSelection: function() {
-      let relevantStates = [];
-      const moves = calculatePossibleMoves(this.state, this.player);
+      let relevantStates = []
+      const moves = calculatePossibleMoves(this.state, this.player)
       for (let index in moves) {
-        relevantStates.push(performMove([...this.state], moves[index]));
+        relevantStates.push(performMove([...this.state], moves[index]))
       }
-      this.filteredStates = relevantStates;
+      this.filteredStates = relevantStates
     },
     handleNewState: function(newState) {
-      this.$forceUpdate();
+      this.$forceUpdate()
 
       if (this.checkWinner(newState, this.player)) {
-        this.computerModel.humanWon();
-        this.forceUpdate++;
-        const self = this;
+        this.computerModel.humanWon()
+        this.forceUpdate++
+        const self = this
         setTimeout(function() {
-          self.state = [...resetToState];
-          self.updateSelection();
-        }, this.timeForPC / 2);
+          self.state = [...resetToState]
+          self.updateSelection()
+        }, this.timeForPC / 2)
       } else {
-        this.state = newState;
-        this.active = this.active == this.player ? this.computer : this.player;
+        this.state = newState
+        this.active = this.active == this.player ? this.computer : this.player
         if (this.active === this.computer) {
           const [move, sweetChosen] = this.computerModel.choosePlayType(
             this.state
-          );
+          )
           if (move === undefined) {
-            this.computerModel.humanWon();
-            this.forceUpdate++;
-            this.winsPlayer++;
+            this.computerModel.humanWon()
+            this.forceUpdate++
+            this.winsPlayer++
 
-            const self = this;
+            const self = this
 
             setTimeout(function() {
-              self.state = [...resetToState];
-              self.updateSelection();
-            }, self.timeForPC * 1.5);
+              self.state = [...resetToState]
+              self.updateSelection()
+            }, self.timeForPC * 1.5)
           } else {
-            this.chosenPlayType = sweetChosen;
-            const stateAfterPCMove = performMove(this.state, move);
-            const self = this;
+            this.chosenPlayType = sweetChosen
+            const stateAfterPCMove = performMove(this.state, move)
+            const self = this
             setTimeout(function() {
-              self.chosenPlayType = -1;
-              self.state = stateAfterPCMove;
-              self.updateSelection();
+              self.chosenPlayType = -1
+              self.state = stateAfterPCMove
+              self.updateSelection()
               if (self.checkWinner(stateAfterPCMove, self.computer)) {
-                self.computerModel.computerWon();
-                self.forceUpdate++;
+                self.computerModel.computerWon()
+                self.forceUpdate++
 
                 setTimeout(function() {
-                  self.state = [...resetToState];
-                  self.updateSelection();
-                }, self.timeForPC * 1.5);
+                  self.state = [...resetToState]
+                  self.updateSelection()
+                }, self.timeForPC * 1.5)
               }
-            }, this.timeForPC);
+            }, this.timeForPC)
           }
         } else {
           // allow human to interact with the figures
         }
-        this.active = this.active == this.player ? this.computer : this.player;
+        this.active = this.active == this.player ? this.computer : this.player
       }
-    }
+    },
   },
   mounted: function() {
-    let uri = window.location.search.substring(1);
-    let params = new URLSearchParams(uri);
+    let uri = window.location.search.substring(1)
+    let params = new URLSearchParams(uri)
     if (params.get("time")) {
-      this.timeForPC = params.get("time");
+      this.timeForPC = params.get("time")
     }
 
     if (params.get("halloween")) {
-      this.halloween = true;
+      this.halloween = true
     }
 
-    this.updateSelection();
-  }
-};
+    this.updateSelection()
+  },
+}
 </script>
 
 <style>

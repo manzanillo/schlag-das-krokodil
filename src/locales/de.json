@@ -1,0 +1,22 @@
+{
+  "Reinforcement Learning - Beat the Crocodile": "Verstärkendes Lernen - Schlag das Krokodil",
+  "Board": "Spielfeld",
+  "Score": "Punkte",
+  "Computer rules": "Computerregeln",
+  "Only possible moves": "Nur mögliche Züge",
+  "Skip": "Überspringen",
+  "Back": "Zurück",
+  "Next": "Weiter",
+  "Finish": "Fertig",
+  "You are playing the <strong>monkeys</strong>. You win, if": "Du spielst die <strong>Äffchen</strong>! Du gewinnst, wenn",
+  "one of your pieces reaches the opposite end of the board.": "eine deiner Figuren ans andere Ende des Bretts gelangt.",
+  "your opponent can not move.": "der Gegner nicht mehr ziehen kann.",
+  "or you capture all of your opponents pieces.": "oder du alle gegnerischen Figuren schlägst.",
+  "Move a monkey via <strong>drag-and-drop!</strong>": "Bewege ein Äffchen via <strong>Drag-and-Drop!</strong>",
+  "The computer searches for the matching rule and randomly selects a colored token. But be warned, it gets better with time.": "Der Computer sucht die passende Regel und wählt zufällig eine farbige Schokolinse. Aber sei gewarnt, mit der Zeit wird er immer besser.",
+  "Use this button to display only those rules that": "Mithilfe dieser Schaltfläche kannst du dir nur jene Regeln anzeigen lassen, die",
+  "might follow your next move directly": "direkt auf deinen nächsten Zug folgen könnten",
+  "and in which the computer has not yet lost.": "und in denen der Computer noch nicht verloren hat.",
+  "You are playing the <strong>pumpkins</strong>. You win, if": "Du spielst die <strong>Kürbisse</strong>! Du gewinnst, wenn",
+  "Move a pumpkin via <strong>drag-and-drop!</strong>": "Bewege einen Kürbis via <strong>Drag-and-Drop!</strong>"
+}

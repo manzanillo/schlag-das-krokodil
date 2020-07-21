@@ -1,0 +1,22 @@
+{
+  "Reinforcement Learning - Beat the Crocodile": "Reinforcement Learning - Beat the Crocodile",
+  "Board": "Board",
+  "Score": "Score",
+  "Computer rules": "Computer rules",
+  "Only possible moves": "Only possible moves",
+  "Skip": "Skip",
+  "Back": "Back",
+  "Next": "Next",
+  "Finish": "Finish",
+  "You are playing the <strong>monkeys</string>. You win, if": "You are playing the <strong>monkeys</strong>. You win, if",
+  "one of your pieces reaches the opposite end of the board.": "one of your pieces reaches the opposite end of the board.",
+  "your opponent can not move.": "your opponent can not move.",
+  "or you capture all of your opponents pieces.": "or you capture all of your opponents pieces.",
+  "Move a monkey via <strong>drag-and-drop!</strong>": "Move a monkey via <strong>drag-and-drop!</strong>",
+  "The computer searches for the matching rule and randomly selects a colored token. But be warned, it gets better with time.": "The computer searches for the matching rule and randomly selects a colored token. But be warned, it gets better with time.",
+  "Use this button to display only those rules that": "Use this button to display only those rules that",
+  "might follow your next move directly": "might follow your next move directly",
+  "and in which the computer has not yet lost.": "and in which the computer has not yet lost.",
+  "You are playing the <strong>pumpkins</strong>. You win, if": "You are playing the <strong>pumpkins</strong>. You win, if",
+  "Move a pumpkin via <strong>drag-and-drop!</strong>": "Move a pumpkin via <strong>drag-and-drop!</strong>"
+}

@@ -12,6 +12,7 @@
     "core-js": "^2.6.5",
     "vue": "^2.6.6",
     "vue-drag-and-drop": "^3.0.0",
+    "vue-i18n": "^8.18.2",
     "vue-m-message": "^1.1.1",
     "vue-tour": "^1.1.0",
     "vue2-touch-events": "^2.0.0"

@@ -11,9 +11,18 @@
       v-touch:end="endHandler"
       ref="fieldslot"
     >
-      <div v-bind:class="{outline: highlights[index]}" class="field-slot" v-if="occupation === 0">
+      <div
+        v-bind:class="{ outline: highlights[index] }"
+        class="field-slot"
+        v-if="occupation === 0"
+      >
         <!-- field is empty -->
-        <img v-bind:id="index" src="../assets/white.svg" alt="empty" width="100%" />
+        <img
+          v-bind:id="index"
+          src="../assets/white.svg"
+          alt="empty"
+          width="100%"
+        />
       </div>
       <div class="field-slot monkey" v-if="occupation === 1">
         <!-- player is occupying field -->
@@ -24,10 +33,16 @@
           alt="human"
           width="100%"
         />
-        <img v-else v-bind:id="index" src="../assets/monkey.svg" alt="human" width="100%" />
+        <img
+          v-else
+          v-bind:id="index"
+          src="../assets/monkey.svg"
+          alt="human"
+          width="100%"
+        />
       </div>
       <div
-        v-bind:class="{'outline': highlights[index]}"
+        v-bind:class="{ outline: highlights[index] }"
         class="field-slot croco"
         v-if="occupation === 2"
       >
@@ -39,56 +54,58 @@
           alt="computer"
           width="100%"
         />
-        <img v-else v-bind:id="index" src="../assets/croco.svg" alt="computer" width="100%" />
+        <img
+          v-else
+          v-bind:id="index"
+          src="../assets/croco.svg"
+          alt="computer"
+          width="100%"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  calculatePossibleMoves,
-  arrayContainsArray,
-  performMove
-} from "../utils/moves.js";
+import { calculatePossibleMoves, arrayContainsArray } from "../utils/moves.js"
 
 export default {
   name: "DraggableChess",
   components: {},
   props: {
     state: Array,
-    halloween: Boolean
+    halloween: Boolean,
   },
   data() {
     return {
       currentState: this.state,
       currentlyDragging: null,
       playerIsAllowedToMove: true,
-      highlights: new Array(this.state.length).fill(false)
-    };
+      highlights: new Array(this.state.length).fill(false),
+    }
   },
   methods: {
     handleMove: function(e) {
       if (!this.playerIsAllowedToMove) {
-        return;
+        return
       }
       if (e instanceof MouseEvent) {
-        return;
+        return
       }
-      this.currentlyDragging = e.srcElement;
+      this.currentlyDragging = e.srcElement
       if (this.currentState[this.currentlyDragging.id] == 1) {
         // it belongs to a human, show where to place it
-        const possibleMoves = calculatePossibleMoves(this.currentState, 1);
-        let possibleDestinations = [];
+        const possibleMoves = calculatePossibleMoves(this.currentState, 1)
+        let possibleDestinations = []
         for (let i = 0; i < possibleMoves.length; i++) {
           if (possibleMoves[i][0] == this.currentlyDragging.id) {
-            possibleDestinations.push(possibleMoves[i][1]);
+            possibleDestinations.push(possibleMoves[i][1])
           }
         }
         for (let i = 0; i < possibleDestinations.length; i++) {
-          this.highlights[possibleDestinations[i]] = true;
+          this.highlights[possibleDestinations[i]] = true
         }
-        this.$forceUpdate();
+        this.$forceUpdate()
       }
     },
     handleMoving: function(e) {
@@ -96,84 +113,83 @@ export default {
     },
     endHandler: function(e) {
       if (!this.playerIsAllowedToMove) {
-        return;
+        return
       }
-      var touchEndedHere = e.changedTouches[0];
+      var touchEndedHere = e.changedTouches[0]
 
-      const fields = this.$refs.fieldslot;
+      const fields = this.$refs.fieldslot
 
       for (let i = 0; i < fields.length; i++) {
-        const boundingRect = fields[i].getBoundingClientRect();
+        const boundingRect = fields[i].getBoundingClientRect()
         if (
           touchEndedHere.clientX > boundingRect.left &&
           touchEndedHere.clientX < boundingRect.right &&
           touchEndedHere.clientY > boundingRect.top &&
           touchEndedHere.clientY < boundingRect.bottom
         ) {
-          const from = this.currentlyDragging.id;
-          const to = i;
-          this.performAction(from, to);
+          const from = this.currentlyDragging.id
+          const to = i
+          this.performAction(from, to)
         }
       }
       //remove all highlights
-      this.highlights.fill(false);
-      this.$forceUpdate();
+      this.highlights.fill(false)
+      this.$forceUpdate()
     },
     handleDrop: function(e) {
       if (!this.playerIsAllowedToMove) {
-        return;
+        return
       }
       //remove all highlights
-      this.highlights.fill(false);
-      this.$forceUpdate();
+      this.highlights.fill(false)
+      this.$forceUpdate()
       // handle movement
       //console.log("handleDrop", this.currentlyDragging, e.target);
-      const from = this.currentlyDragging.id;
-      const to = e.target.id;
-      this.performAction(from, to);
+      const from = this.currentlyDragging.id
+      const to = e.target.id
+      this.performAction(from, to)
     },
     performAction(from, to) {
-      const placeholder = this.currentState[from];
-      const possibleMoves = calculatePossibleMoves(this.currentState, 1);
-      const moveTried = [from, to];
+      const placeholder = this.currentState[from]
+      const possibleMoves = calculatePossibleMoves(this.currentState, 1)
+      const moveTried = [from, to]
       if (arrayContainsArray(possibleMoves, moveTried)) {
-        this.currentState[this.currentlyDragging.id] = 0;
-        this.currentState[to] = placeholder;
-        this.$forceUpdate();
-        this.playerIsAllowedToMove = false;
-        this.$emit("new-state", this.currentState);
+        this.currentState[this.currentlyDragging.id] = 0
+        this.currentState[to] = placeholder
+        this.$forceUpdate()
+        this.playerIsAllowedToMove = false
+        this.$emit("new-state", this.currentState)
       }
     },
     handleDrag: function(e) {
       if (!this.playerIsAllowedToMove) {
-        return;
+        return
       }
-      this.currentlyDragging = e.srcElement;
+      this.currentlyDragging = e.srcElement
       if (this.currentState[this.currentlyDragging.id] == 1) {
         // it belongs to a human, show where to place it
-        const possibleMoves = calculatePossibleMoves(this.currentState, 1);
-        let possibleDestinations = [];
+        const possibleMoves = calculatePossibleMoves(this.currentState, 1)
+        let possibleDestinations = []
         for (let i = 0; i < possibleMoves.length; i++) {
           if (possibleMoves[i][0] == this.currentlyDragging.id) {
-            possibleDestinations.push(possibleMoves[i][1]);
+            possibleDestinations.push(possibleMoves[i][1])
           }
         }
         for (let i = 0; i < possibleDestinations.length; i++) {
-          this.highlights[possibleDestinations[i]] = true;
+          this.highlights[possibleDestinations[i]] = true
         }
-        this.$forceUpdate();
+        this.$forceUpdate()
       }
-    }
+    },
   },
   watch: {
     state: function(newVal, oldVal) {
-      this.currentState = newVal;
-      this.playerIsAllowedToMove = true;
-    }
-  }
-};
+      this.currentState = newVal
+      this.playerIsAllowedToMove = true
+    },
+  },
+}
 </script>
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

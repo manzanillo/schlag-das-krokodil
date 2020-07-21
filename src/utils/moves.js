@@ -1,6 +1,6 @@
 function getDirectionForPlayer(player) {
-  if (player == 1) return 'down'
-  if (player == 2) return 'up'
+  if (player == 1) return "down"
+  if (player == 2) return "up"
 }
 
 export function calculatePossibleMoves(originalState, player) {
@@ -11,20 +11,20 @@ export function calculatePossibleMoves(originalState, player) {
   const direction = getDirectionForPlayer(player)
 
   if (dimension * dimension != state.length) {
-    console.log('provided state is not a square')
+    //console.log('provided state is not a square')
     return
   }
 
   const rows = state
     .map(() => state.splice(0, dimension))
-    .filter(state => state)
+    .filter((state) => state)
 
   let possibleMoves = []
   for (let i = 0; i < dimension; i++) {
     for (let j = 0; j < rows[i].length; j++) {
       if (rows[i][j] == player) {
         // check if this avatar can move
-        const nextRow = direction == 'down' ? i + 1 : i - 1
+        const nextRow = direction == "down" ? i + 1 : i - 1
         if (nextRow >= 0 && nextRow < rows.length) {
           /* if there is still one row below we now check
                     a) if field below or up is empty
@@ -63,18 +63,18 @@ export function checkIfPlayerWins(state, player) {
   const opponent = player == 1 ? 2 : 1
   const direction = getDirectionForPlayer(player)
 
-  if (state.filter(x => x == opponent).length == 0) {
+  if (state.filter((x) => x == opponent).length == 0) {
     return true
   }
 
-  if (direction == 'down') {
+  if (direction == "down") {
     for (let i = 0; i < dimension; i++) {
       if (state[state.length - 1 - i] == player) {
         return true
       }
     }
   }
-  if (direction == 'up') {
+  if (direction == "up") {
     for (let i = 0; i < dimension; i++) {
       if (state[i] == player) {
         return true
@@ -93,7 +93,7 @@ export function calculateAllPossibleStatesForPC(initialState) {
   allStates = allStates
     .sort((a, b) => a.iteration - b.iteration)
     .map(({ state, iteration }) => (iteration % 2 == 1 ? state : []))
-    .filter(state => state.length > 0)
+    .filter((state) => state.length > 0)
   return Array.from(new Set(allStates.map(JSON.stringify)), JSON.parse)
 }
 
@@ -158,11 +158,11 @@ export function checkIfStateIsContained(states, state) {
   return false
 }
 
-function matchSituationsAreMirrored(state1, state2) {
+/*function matchSituationsAreMirrored(state1, state2) {
   //Aktuell nur für 3x3
   const firstRow = state1[0] == state2[2] && state1[2] == state2[0]
   const secondRow = state1[3] == state2[5] && state1[5] == state2[3]
   const thirdRow = state1[6] == state2[8] && state1[8] == state2[6]
 
   return firstRow && secondRow && thirdRow
-}
+}*/
