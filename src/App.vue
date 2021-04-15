@@ -241,7 +241,6 @@ export default {
     },
   },
   created: function() {
-    console.log("idp")
     let uri = window.location.search.substring(1)
     let params = new URLSearchParams(uri)
     if (params.get("time")) {
@@ -253,7 +252,6 @@ export default {
     }
     if (params.get("robots")) {
       this.figureType = 2
-      console.log(this.figureType)
     }
 
     this.updateSelection()

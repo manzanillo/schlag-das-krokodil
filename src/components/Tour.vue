@@ -1,7 +1,7 @@
 <template id="tour">
   <v-tour
     v-if="figureType===1"
-    name="myTourHalloween"
+    name="myTour"
     :steps="stepsHalloween"
     :options="myOptions"
   ></v-tour>
