@@ -65,6 +65,10 @@
         <div class="row">
           <h4 class="left-text">{{ $t("Computer rules") }}</h4>
           <!-- Rounded switch -->
+          <div style="margin-top: 0.5em;">
+              <div>{{ $t("Speed") }}</div>
+              <input v-model="timeForPC" style="margin-top: 1em;" type="range" min="1" max="20000" value="50"  v-on:change="changeRangeSlider">
+          </div>
           <div class="limit-options-btn">
             <div>{{ $t("Only possible moves") }}</div>
             <label class="switch">
@@ -145,6 +149,10 @@ export default {
     checkIfStateIsContained,
     clickSwitch: function(evt) {
       this.filter = !this.filter
+    },
+    changeRangeSlider: function(evt){
+      console.log(evt)
+      //self.timeForPC = 5000
     },
     checkWinner: function(newState, who) {
       if (checkIfPlayerWins(newState, who)) {
@@ -387,5 +395,11 @@ input:checked + .slider:before {
   flex-direction: row;
   justify-content: space-evenly;
   margin-bottom: 1em;
+}
+
+@media (max-width: 800px) {
+  .row {
+    margin-top: 4em;
+  }
 }
 </style>
