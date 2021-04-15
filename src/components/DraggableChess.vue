@@ -27,7 +27,7 @@
       <div class="field-slot monkey" v-if="occupation === 1">
         <!-- player is occupying field -->
         <img
-          v-if="halloween"
+          v-if="figureType===1"
           v-bind:id="index"
           src="../assets/monkey-halloween.svg"
           alt="human"
@@ -42,15 +42,22 @@
         />
       </div>
       <div
-        v-bind:class="{ outline: highlights[index] }"
-        class="field-slot croco"
+        v-bind:class="{ outline: highlights[index], 'croco': figureType!==2, 'robot': figureType === 2  }"
+        class="field-slot"
         v-if="occupation === 2"
       >
         <!-- computer is occupying field -->
         <img
-          v-if="halloween"
+          v-if="figureType===1"
           v-bind:id="index"
           src="../assets/croco-halloween.svg"
+          alt="computer"
+          width="100%"
+        />
+        <img
+          v-else-if="figureType===2"
+          v-bind:id="index"
+          src="../assets/robot.svg"
           alt="computer"
           width="100%"
         />
@@ -74,7 +81,7 @@ export default {
   components: {},
   props: {
     state: Array,
-    halloween: Boolean,
+    figureType: Number,
   },
   data() {
     return {
@@ -213,5 +220,8 @@ export default {
 }
 .croco {
   background-color: #a0a0a0;
+}
+.robot {
+  background-color: #ffc000;
 }
 </style>

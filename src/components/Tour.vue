@@ -1,6 +1,6 @@
 <template id="tour">
   <v-tour
-    v-if="halloween"
+    v-if="figureType===1"
     name="myTourHalloween"
     :steps="stepsHalloween"
     :options="myOptions"
@@ -12,7 +12,7 @@
 export default {
   name: "Tour",
   props: {
-    halloween: Boolean,
+    figureType: Number,
   },
   data() {
     return {

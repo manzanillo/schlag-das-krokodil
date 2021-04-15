@@ -75,7 +75,7 @@
         />
 
         <image
-          v-if="occupation === 1 && halloween"
+          v-else-if="occupation === 1 && figureType===1"
           :width="dimension / 3"
           :height="dimension / 3"
           :x="(dimension / 3) * (index % 3)"
@@ -84,7 +84,17 @@
         />
 
         <image
-          v-if="occupation === 2 && halloween"
+          v-else-if="occupation === 1 && figureType !== 1"
+          :width="dimension / 3"
+          :height="dimension / 3"
+          :x="(dimension / 3) * (index % 3)"
+          :y="(dimension / 3) * Math.floor(index / 3)"
+          xlink:href="../assets/monkey.svg"
+        />
+
+
+        <image
+          v-else-if="occupation === 2 && figureType===1"
           :width="dimension / 3"
           :height="dimension / 3"
           :x="(dimension / 3) * (index % 3)"
@@ -93,16 +103,16 @@
         />
 
         <image
-          v-if="occupation === 1 && !halloween"
+          v-else-if="occupation === 2 && figureType === 2"
           :width="dimension / 3"
           :height="dimension / 3"
           :x="(dimension / 3) * (index % 3)"
           :y="(dimension / 3) * Math.floor(index / 3)"
-          xlink:href="../assets/monkey.svg"
+          xlink:href="../assets/robot.svg"
         />
 
         <image
-          v-if="occupation === 2 && !halloween"
+          v-else-if="occupation === 2 && figureType === 0"
           :width="dimension / 3"
           :height="dimension / 3"
           :x="(dimension / 3) * (index % 3)"
@@ -132,7 +142,7 @@ export default {
     state: Array,
     dimension: { type: Number, default: 180 },
     actions: Array,
-    halloween: Boolean,
+    figureType: Number,
   },
   data: function() {
     return {

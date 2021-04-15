@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>
-      {{ $t("Reinforcement Learning - Beat the Crocodile") }}
+      {{ figureType === 2 ? $t("Reinforcement Learning - Beat the Robot") : $t("Reinforcement Learning - Beat the Crocodile") }}
     </h1>
 
     <div id="main-view">
@@ -10,7 +10,7 @@
         <DraggableChess
           :state="this.state"
           @new-state="handleNewState"
-          :halloween="this.halloween"
+          :figureType="this.figureType"
         />
         <h4 class="left-text">{{ $t("Score") }}</h4>
         <div class="points">
@@ -18,7 +18,7 @@
             <div class="points-svg-container">
               <svg width="50" height="50" viewBox="0 0 50 50">
                 <image
-                  v-if="halloween"
+                  v-if="figureType===1"
                   width="50"
                   height="50"
                   xlink:href="./assets/monkey-halloween.svg"
@@ -40,10 +40,16 @@
             <div class="points-svg-container">
               <svg width="50" height="50" viewBox="0 0 50 50">
                 <image
-                  v-if="halloween"
+                  v-if="figureType===1"
                   width="50"
                   height="50"
                   xlink:href="./assets/croco-halloween.svg"
+                />
+                <image
+                  v-else-if="figureType===2"
+                  width="50"
+                  height="50"
+                  xlink:href="./assets/robot.svg"
                 />
                 <image
                   v-else
@@ -95,13 +101,13 @@
               v-bind:forceUpdate="forceUpdate"
               v-bind:currentState="compareStates(model.state, state)"
               v-bind:chosenPlayType="chosenPlayType"
-              v-bind:halloween="halloween"
+              v-bind:figureType="figureType"
             />
           </div>
         </div>
       </div>
     </div>
-    <Tour :halloween="this.halloween" />
+    <Tour :figureType="this.figureType" />
   </div>
 </template>
 
@@ -139,7 +145,7 @@ export default {
       timeForPC: 3000,
       displayWin: 0,
       chosenPlayType: -1,
-      halloween: false,
+      figureType: 0,
       filteredStates: [],
       filter: false,
     }
@@ -234,7 +240,8 @@ export default {
       }
     },
   },
-  mounted: function() {
+  created: function() {
+    console.log("idp")
     let uri = window.location.search.substring(1)
     let params = new URLSearchParams(uri)
     if (params.get("time")) {
@@ -242,7 +249,11 @@ export default {
     }
 
     if (params.get("halloween")) {
-      this.halloween = true
+      this.figureType = 1
+    }
+    if (params.get("robots")) {
+      this.figureType = 2
+      console.log(this.figureType)
     }
 
     this.updateSelection()

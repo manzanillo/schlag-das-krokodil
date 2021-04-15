@@ -4,7 +4,7 @@
       v-bind:state="state"
       v-bind:dimension="dimension"
       v-bind:actions="actions"
-      v-bind:halloween="halloween"
+      v-bind:figureType="figureType"
     />
     <div class="actions-rating">
       <svg :width="dimension" :height="dimension">
@@ -50,7 +50,7 @@ export default {
     forceUpdate: Number,
     currentState: Boolean,
     chosenPlayType: Number,
-    halloween: Boolean
+    figureType: Number
   },
   data: function() {
     return {
