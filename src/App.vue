@@ -37,10 +37,15 @@
                 />
               </svg>
             </div>
-            <div v-if="displayWin == 1" style="float: right; color: green;">
-              +1
+            <div style="position: relative">
+              <div
+                v-if="displayWin === 1"
+                style="position:absolute; color: green; animation: slide-up 0.5s ease; width: 100%; top: -50%;"
+              >
+                +1
+              </div>
+              <div style="width: 50px; margin: 0 auto;">{{ winsPlayer }}</div>
             </div>
-            <div style="width: 50px; margin: 0 auto;">{{ winsPlayer }}</div>
           </div>
           <div>
             <div class="points-svg-container">
@@ -65,10 +70,15 @@
                 />
               </svg>
             </div>
-            <div v-if="displayWin == 2" style="float: right; color: red;">
-              +1
+            <div style="position: relative">
+              <div
+                v-if="displayWin === 2"
+                style="position:absolute; color: red; animation: slide-up 0.5s ease; width: 100%; top: -50%;"
+              >
+                +1
+              </div>
+              <div style="width: 50px; margin: 0 auto;">{{ winsPC }}</div>
             </div>
-            <div style="width: 50px; margin: 0 auto;">{{ winsPC }}</div>
           </div>
         </div>
       </div>
