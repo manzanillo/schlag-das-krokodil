@@ -109,15 +109,12 @@
 
         <div class="rulesets">
           <div
-            v-for="(model, index) in computerModel.getModel()"
+            v-for="(model, index) in stateList"
             :key="index"
             class="ruleset"
             v-bind:class="{ outlinerule: compareStates(model.state, state) }"
           >
             <PossibleActions
-              v-if="
-                !filter || checkIfStateIsContained(filteredStates, model.state)
-              "
               v-bind:state="model.state"
               v-bind:actions="model.actions"
               v-bind:sweets="model.sweets"
@@ -174,6 +171,17 @@ export default {
       filter: false,
       disableDragAndDrop: false,
     }
+  },
+  computed: {
+    stateList: function() {
+      let model = this.computerModel.getModel()
+      if (this.filter) {
+        model = model.filter((x) =>
+          checkIfStateIsContained(this.filteredStates, x.state)
+        )
+      }
+      return model
+    },
   },
   methods: {
     compareStates,
