@@ -1,87 +1,102 @@
 <template id="chessground">
-  <div class="field">
+  <div style="position: relative;">
+    <div v-if="disabled" v-bind:class="{ 'gameover-message': disabled }">
+      {{ winner === 'human' ? $t('You win') : $t('Computer wins') }}
+    </div>
+
     <div
-      v-for="(occupation, index) in currentState"
-      :key="index"
-      v-drag-and-drop
-      v-on:drag="handleDrag"
-      v-on:drop="handleDrop"
-      v-touch:moved="handleMove"
-      v-touch:moving="handleMoving"
-      v-touch:end="endHandler"
-      ref="fieldslot"
+      class="field"
+      v-bind:style="[disabled ? { animation: 'animate 4s linear normal' } : {}]"
     >
       <div
-        v-bind:class="{ outline: highlights[index] }"
-        class="field-slot"
-        v-if="occupation === 0"
+        v-for="(occupation, index) in currentState"
+        :key="index"
+        v-drag-and-drop
+        v-on:drag="handleDrag"
+        v-on:drop="handleDrop"
+        v-touch:moved="handleMove"
+        v-touch:moving="handleMoving"
+        v-touch:end="endHandler"
+        ref="fieldslot"
       >
-        <!-- field is empty -->
-        <img
-          v-bind:id="index"
-          src="../assets/white.svg"
-          alt="empty"
-          width="100%"
-        />
-      </div>
-      <div class="field-slot monkey" v-if="occupation === 1">
-        <!-- player is occupying field -->
-        <img
-          v-if="figureType===1"
-          v-bind:id="index"
-          src="../assets/monkey-halloween.svg"
-          alt="human"
-          width="100%"
-        />
-        <img
-          v-else
-          v-bind:id="index"
-          src="../assets/monkey.svg"
-          alt="human"
-          width="100%"
-        />
-      </div>
-      <div
-        v-bind:class="{ outline: highlights[index], 'croco': figureType!==2, 'robot': figureType === 2  }"
-        class="field-slot"
-        v-if="occupation === 2"
-      >
-        <!-- computer is occupying field -->
-        <img
-          v-if="figureType===1"
-          v-bind:id="index"
-          src="../assets/croco-halloween.svg"
-          alt="computer"
-          width="100%"
-        />
-        <img
-          v-else-if="figureType===2"
-          v-bind:id="index"
-          src="../assets/robot.svg"
-          alt="computer"
-          width="100%"
-        />
-        <img
-          v-else
-          v-bind:id="index"
-          src="../assets/croco.svg"
-          alt="computer"
-          width="100%"
-        />
+        <div
+          v-bind:class="{ outline: highlights[index] }"
+          class="field-slot"
+          v-if="occupation === 0"
+        >
+          <!-- field is empty -->
+          <img
+            v-bind:id="index"
+            src="../assets/white.svg"
+            alt="empty"
+            width="100%"
+          />
+        </div>
+        <div class="field-slot monkey" v-if="occupation === 1">
+          <!-- player is occupying field -->
+          <img
+            v-if="figureType === 1"
+            v-bind:id="index"
+            src="../assets/monkey-halloween.svg"
+            alt="human"
+            width="100%"
+          />
+          <img
+            v-else
+            v-bind:id="index"
+            src="../assets/monkey.svg"
+            alt="human"
+            width="100%"
+          />
+        </div>
+        <div
+          v-bind:class="{
+            outline: highlights[index],
+            croco: figureType !== 2,
+            robot: figureType === 2,
+          }"
+          class="field-slot"
+          v-if="occupation === 2"
+        >
+          <!-- computer is occupying field -->
+          <img
+            v-if="figureType === 1"
+            v-bind:id="index"
+            src="../assets/croco-halloween.svg"
+            alt="computer"
+            width="100%"
+          />
+          <img
+            v-else-if="figureType === 2"
+            v-bind:id="index"
+            src="../assets/robot.svg"
+            alt="computer"
+            width="100%"
+          />
+          <img
+            v-else
+            v-bind:id="index"
+            src="../assets/croco.svg"
+            alt="computer"
+            width="100%"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { calculatePossibleMoves, arrayContainsArray } from "../utils/moves.js"
+import { calculatePossibleMoves, arrayContainsArray } from '../utils/moves.js'
 
 export default {
-  name: "DraggableChess",
+  name: 'DraggableChess',
   components: {},
   props: {
     state: Array,
     figureType: Number,
+    disabled: Boolean,
+    winner: String,
   },
   data() {
     return {
@@ -93,7 +108,7 @@ export default {
   },
   methods: {
     handleMove: function(e) {
-      if (!this.playerIsAllowedToMove) {
+      if (!this.playerIsAllowedToMove || this.disabled) {
         return
       }
       if (e instanceof MouseEvent) {
@@ -119,10 +134,16 @@ export default {
       //console.log(e);
     },
     endHandler: function(e) {
-      if (!this.playerIsAllowedToMove) {
+      if (!this.playerIsAllowedToMove || this.disabled) {
         return
       }
-      var touchEndedHere = e.changedTouches[0]
+
+      let touchEndedHere
+      try {
+        touchEndedHere = e.changedTouches[0]
+      } catch (err) {
+        return
+      }
 
       const fields = this.$refs.fieldslot
 
@@ -144,7 +165,7 @@ export default {
       this.$forceUpdate()
     },
     handleDrop: function(e) {
-      if (!this.playerIsAllowedToMove) {
+      if (!this.playerIsAllowedToMove || this.disabled) {
         return
       }
       //remove all highlights
@@ -165,11 +186,11 @@ export default {
         this.currentState[to] = placeholder
         this.$forceUpdate()
         this.playerIsAllowedToMove = false
-        this.$emit("new-state", this.currentState)
+        this.$emit('new-state', this.currentState)
       }
     },
     handleDrag: function(e) {
-      if (!this.playerIsAllowedToMove) {
+      if (!this.playerIsAllowedToMove || this.disabled) {
         return
       }
       this.currentlyDragging = e.srcElement
@@ -223,5 +244,16 @@ export default {
 }
 .robot {
   background-color: #ffc000;
+}
+
+.gameover-message {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 45%;
+  font-size: 2.2rem;
+  border: none !important;
+  font-weight: 400;
+  z-index: 9999;
 }
 </style>
