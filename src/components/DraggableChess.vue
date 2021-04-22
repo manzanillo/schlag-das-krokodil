@@ -253,7 +253,7 @@ export default {
   top: 45%;
   font-size: 2.2rem;
   border: none !important;
-  font-weight: 400;
+  font-weight: bold;
   z-index: 9999;
 }
 </style>
