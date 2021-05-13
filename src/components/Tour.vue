@@ -1,6 +1,6 @@
 <template id="tour">
   <v-tour
-    v-if="figureType===1"
+    v-if="figureType === 1"
     name="myTour"
     :steps="stepsHalloween"
     :options="myOptions"
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "Tour",
+  name: 'Tour',
   props: {
     figureType: Number,
   },
@@ -19,130 +19,130 @@ export default {
       myOptions: {
         useKeyboardNavigation: false,
         labels: {
-          buttonSkip: this.$i18n.t("Skip"),
-          buttonPrevious: this.$i18n.t("Back"),
-          buttonNext: this.$i18n.t("Next"),
-          buttonStop: this.$i18n.t("Finish"),
+          buttonSkip: this.$i18n.t('Skip'),
+          buttonPrevious: this.$i18n.t('Back'),
+          buttonNext: this.$i18n.t('Next'),
+          buttonStop: this.$i18n.t('Finish'),
         },
       },
       steps: [
         {
-          target: "#main-game>h4", // We're using document.querySelector() under the hood
+          target: '#main-game>h4', // We're using document.querySelector() under the hood
           content:
             this.$i18n.t(
-              "You are playing the <strong>monkeys</strong>. You win, if"
+              'You are playing the <strong>monkeys</strong>. Each piece moves like a pawn, i.e. it can move forward and capture diagonally.'
             ) +
             `
           <ul style="text-align: left;">
           <li>` +
             this.$i18n.t(
-              "one of your pieces reaches the opposite end of the board."
+              'one of your pieces reaches the opposite end of the board.'
             ) +
             `</li>
           <li>` +
-            this.$i18n.t("your opponent can not move.") +
+            this.$i18n.t('your opponent can not move.') +
             `</li>
           <li>` +
-            this.$i18n.t("or you capture all of your opponents pieces.") +
+            this.$i18n.t('or you capture all of your opponents pieces.') +
             `</li>
           </ul>`,
           params: {
-            placement: "right",
+            placement: 'right',
           },
         },
         {
-          target: "img:first-of-type",
+          target: 'img:first-of-type',
           content: this.$i18n.t(
-            "Move a monkey via <strong>drag-and-drop!</strong>"
+            'Move a monkey via <strong>drag-and-drop!</strong>'
           ),
         },
         {
-          target: "#main-rules>div>h4",
+          target: '#main-rules>div>h4',
           content: this.$i18n.t(
-            "The computer searches for the matching rule and randomly selects a colored token. But be warned, it gets better with time."
+            'The computer searches for the matching rule and randomly selects a colored token. But be warned, it gets better with time.'
           ),
           params: {
-            placement: "left",
+            placement: 'left',
           },
         },
         {
-          target: ".limit-options-btn",
+          target: '.limit-options-btn',
           content:
-            this.$i18n.t("Use this button to display only those rules that") +
+            this.$i18n.t('Use this button to display only those rules that') +
             `<ul style="text-align: left;">
           <li>` +
-            this.$i18n.t("might follow your next move directly") +
+            this.$i18n.t('might follow your next move directly') +
             `</li>
           <li>` +
-            this.$i18n.t("and in which the computer has not yet lost.") +
+            this.$i18n.t('and in which the computer has not yet lost.') +
             `</li>
             </ul>`,
           params: {
-            placement: "bottom",
+            placement: 'bottom',
           },
         },
       ],
       stepsHalloween: [
         {
-          target: "#main-game>h4", // We're using document.querySelector() under the hood
+          target: '#main-game>h4', // We're using document.querySelector() under the hood
           content:
             this.$i18n.t(
-              "You are playing the <strong>pumpkins</strong>. You win, if"
+              'You are playing the <strong>pumpkins</strong>. You win, if'
             ) +
             `
           <ul style="text-align: left;">
           <li>` +
             this.$i18n.t(
-              "one of your pieces reaches the opposite end of the board."
+              'one of your pieces reaches the opposite end of the board.'
             ) +
             `</li>
           <li>` +
-            this.$i18n.t("your opponent can not move.") +
+            this.$i18n.t('your opponent can not move.') +
             `</li>
           <li>` +
-            this.$i18n.t("or you capture all of your opponents pieces.") +
+            this.$i18n.t('or you capture all of your opponents pieces.') +
             `</li>
           </ul>`,
           params: {
-            placement: "right",
+            placement: 'right',
           },
         },
         {
-          target: "img:first-of-type",
+          target: 'img:first-of-type',
           content: this.$i18n.t(
-            "Move a pumpkin via <strong>drag-and-drop!</strong>"
+            'Move a pumpkin via <strong>drag-and-drop!</strong>'
           ),
         },
         {
-          target: "#main-rules>div>h4",
+          target: '#main-rules>div>h4',
           content: this.$i18n.t(
-            "The computer searches for the matching rule and randomly selects a colored token. But be warned, it gets better with time."
+            'The computer searches for the matching rule and randomly selects a colored token. But be warned, it gets better with time.'
           ),
           params: {
-            placement: "left",
+            placement: 'left',
           },
         },
         {
-          target: ".limit-options-btn",
+          target: '.limit-options-btn',
           content:
-            this.$i18n.t("Use this button to display only those rules that") +
+            this.$i18n.t('Use this button to display only those rules that') +
             `<ul style="text-align: left;">
           <li>` +
-            this.$i18n.t("might follow your next move directly") +
+            this.$i18n.t('might follow your next move directly') +
             `</li>
           <li>` +
-            this.$i18n.t("and in which the computer has not yet lost.") +
+            this.$i18n.t('and in which the computer has not yet lost.') +
             `</li>
             </ul>`,
           params: {
-            placement: "bottom",
+            placement: 'bottom',
           },
         },
       ],
     }
   },
   mounted: function() {
-    this.$tours["myTour"].start()
+    this.$tours['myTour'].start()
   },
 }
 </script>

@@ -9,7 +9,7 @@
   "Back": "Back",
   "Next": "Next",
   "Finish": "Finish",
-  "You are playing the <strong>monkeys</string>. You win, if": "You are playing the <strong>monkeys</strong>. You win, if",
+  "You are playing the <strong>monkeys</strong>. Each piece moves like a pawn, i.e. it can move forward and capture diagonally.": "You are playing the <strong>monkeys</strong>. Each piece moves like a pawn, i.e. it can move forward and capture diagonally. You win, if",
   "one of your pieces reaches the opposite end of the board.": "one of your pieces reaches the opposite end of the board.",
   "your opponent can not move.": "your opponent can not move.",
   "or you capture all of your opponents pieces.": "or you capture all of your opponents pieces.",
