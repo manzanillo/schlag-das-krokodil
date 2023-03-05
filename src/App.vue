@@ -3,14 +3,14 @@
     <h1>
       {{
         figureType === 2
-          ? $t('Reinforcement Learning - Beat the Robot')
-          : $t('Reinforcement Learning - Beat the Crocodile')
+          ? $t("Reinforcement Learning - Beat the Robot")
+          : $t("Reinforcement Learning - Beat the Crocodile")
       }}
     </h1>
 
     <div id="main-view">
       <div id="main-game">
-        <h4 class="left-text">{{ $t('Board') }}</h4>
+        <h4 class="left-text">{{ $t("Board") }}</h4>
         <DraggableChess
           :state="this.state"
           @new-state="handleNewState"
@@ -18,7 +18,7 @@
           :disabled="this.disableDragAndDrop"
           :winner="this.winner"
         />
-        <h4 class="left-text">{{ $t('Score') }}</h4>
+        <h4 class="left-text">{{ $t("Score") }}</h4>
         <div class="points">
           <div>
             <div class="points-svg-container">
@@ -27,7 +27,7 @@
                   v-if="figureType === 1"
                   width="50"
                   height="50"
-                  xlink:href="./assets/monkey-halloween.svg"
+                  xlink:href="./assets/c-human.svg"
                 />
                 <image
                   v-else
@@ -40,11 +40,17 @@
             <div style="position: relative">
               <div
                 v-if="displayWin === 1"
-                style="position:absolute; color: green; animation: slide-up 0.5s ease; width: 100%; top: -50%;"
+                style="
+                  position: absolute;
+                  color: green;
+                  animation: slide-up 0.5s ease;
+                  width: 100%;
+                  top: -50%;
+                "
               >
                 +1
               </div>
-              <div style="width: 50px; margin: 0 auto;">{{ winsPlayer }}</div>
+              <div style="width: 50px; margin: 0 auto">{{ winsPlayer }}</div>
             </div>
           </div>
           <div>
@@ -54,7 +60,7 @@
                   v-if="figureType === 1"
                   width="50"
                   height="50"
-                  xlink:href="./assets/croco-halloween.svg"
+                  xlink:href="./assets/c-human.svg"
                 />
                 <image
                   v-else-if="figureType === 2"
@@ -73,11 +79,17 @@
             <div style="position: relative">
               <div
                 v-if="displayWin === 2"
-                style="position:absolute; color: red; animation: slide-up 0.5s ease; width: 100%; top: -50%;"
+                style="
+                  position: absolute;
+                  color: red;
+                  animation: slide-up 0.5s ease;
+                  width: 100%;
+                  top: -50%;
+                "
               >
                 +1
               </div>
-              <div style="width: 50px; margin: 0 auto;">{{ winsPC }}</div>
+              <div style="width: 50px; margin: 0 auto">{{ winsPC }}</div>
             </div>
           </div>
         </div>
@@ -85,13 +97,13 @@
       <!-- Da meistens 16:9 Monitore verwendet werden, sollte das vermutlich rechts vom Spielfeld angezeigt werden -->
       <div id="main-rules">
         <div class="row">
-          <h4 class="left-text">{{ $t('Computer rules') }}</h4>
+          <h4 class="left-text">{{ $t("Computer rules") }}</h4>
           <!-- Rounded switch -->
-          <div style="margin-top: 0.5em;">
-            <div>{{ $t('Speed') }}</div>
+          <div style="margin-top: 0.5em">
+            <div>{{ $t("Speed") }}</div>
             <input
               v-model.number="timeForPC"
-              style="margin-top: 1em;"
+              style="margin-top: 1em"
               type="range"
               min="1"
               max="20000"
@@ -99,7 +111,7 @@
             />
           </div>
           <div class="limit-options-btn">
-            <div>{{ $t('Only possible moves') }}</div>
+            <div>{{ $t("Only possible moves") }}</div>
             <label class="switch">
               <input type="checkbox" v-on:click="clickSwitch" />
               <span class="slider round"></span>
@@ -132,27 +144,27 @@
 </template>
 
 <script>
-const resetToState = [1, 1, 1, 0, 0, 0, 2, 2, 2]
-import DraggableChess from './components/DraggableChess.vue'
-import PossibleActions from './components/PossibleActions.vue'
-import Tour from './components/Tour.vue'
+const resetToState = [1, 1, 1, 0, 0, 0, 2, 2, 2];
+import DraggableChess from "./components/DraggableChess.vue";
+import PossibleActions from "./components/PossibleActions.vue";
+import Tour from "./components/Tour.vue";
 import {
   performMove,
   checkIfPlayerWins,
   compareStates,
   checkIfStateIsContained,
   calculatePossibleMoves,
-} from './utils/moves.js'
-import LearningModel from './utils/model.js'
+} from "./utils/moves.js";
+import LearningModel from "./utils/model.js";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     DraggableChess,
     PossibleActions,
     Tour,
   },
-  data: function() {
+  data: function () {
     return {
       state: [...resetToState],
       player: 1,
@@ -160,7 +172,7 @@ export default {
       active: 1,
       winsPlayer: 0,
       winsPC: 0,
-      winner: 'human',
+      winner: "human",
       computerModel: new LearningModel([...resetToState]),
       forceUpdate: 1,
       timeForPC: 3000,
@@ -170,124 +182,124 @@ export default {
       filteredStates: [],
       filter: false,
       disableDragAndDrop: false,
-    }
+    };
   },
   computed: {
-    stateList: function() {
-      let model = this.computerModel.getModel()
+    stateList: function () {
+      let model = this.computerModel.getModel();
       if (this.filter) {
         model = model.filter((x) =>
           checkIfStateIsContained(this.filteredStates, x.state)
-        )
+        );
       }
-      return model
+      return model;
     },
   },
   methods: {
     compareStates,
     checkIfStateIsContained,
-    clickSwitch: function(evt) {
-      this.filter = !this.filter
+    clickSwitch: function (evt) {
+      this.filter = !this.filter;
     },
-    checkWinner: function(newState, who) {
+    checkWinner: function (newState, who) {
       if (checkIfPlayerWins(newState, who)) {
-        const self = this
+        const self = this;
         if (who === this.player) {
-          this.displayWin = 1
-          setTimeout(function() {
-            self.displayWin = 0
-            self.winsPlayer++
-          }, this.timeForPC / 2)
+          this.displayWin = 1;
+          setTimeout(function () {
+            self.displayWin = 0;
+            self.winsPlayer++;
+          }, this.timeForPC / 2);
         } else {
-          this.displayWin = 2
-          setTimeout(function() {
-            self.displayWin = 0
-            self.winsPC++
-          }, this.timeForPC / 2)
+          this.displayWin = 2;
+          setTimeout(function () {
+            self.displayWin = 0;
+            self.winsPC++;
+          }, this.timeForPC / 2);
         }
-        return true
+        return true;
       }
-      return false
+      return false;
     },
-    updateSelection: function() {
-      let relevantStates = []
-      const moves = calculatePossibleMoves(this.state, this.player)
+    updateSelection: function () {
+      let relevantStates = [];
+      const moves = calculatePossibleMoves(this.state, this.player);
       for (let index in moves) {
-        relevantStates.push(performMove([...this.state], moves[index]))
+        relevantStates.push(performMove([...this.state], moves[index]));
       }
-      this.filteredStates = relevantStates
+      this.filteredStates = relevantStates;
     },
-    handleGameOver: function(winner) {
-      this.winner = winner
-      this.disableDragAndDrop = true
-      this.forceUpdate++
-      const self = this
-      setTimeout(function() {
-        self.state = [...resetToState]
-        self.updateSelection()
-        self.disableDragAndDrop = false
-      }, 4000)
+    handleGameOver: function (winner) {
+      this.winner = winner;
+      this.disableDragAndDrop = true;
+      this.forceUpdate++;
+      const self = this;
+      setTimeout(function () {
+        self.state = [...resetToState];
+        self.updateSelection();
+        self.disableDragAndDrop = false;
+      }, 4000);
     },
 
-    handleNewState: function(newState) {
-      this.$forceUpdate()
+    handleNewState: function (newState) {
+      this.$forceUpdate();
       if (this.checkWinner(newState, this.player)) {
-        this.computerModel.humanWon()
-        this.handleGameOver('human')
+        this.computerModel.humanWon();
+        this.handleGameOver("human");
       } else {
-        this.state = newState
-        this.active = this.active == this.player ? this.computer : this.player
+        this.state = newState;
+        this.active = this.active == this.player ? this.computer : this.player;
         if (this.active === this.computer) {
           const [move, sweetChosen] = this.computerModel.choosePlayType(
             this.state
-          )
+          );
           if (move === undefined) {
-            this.computerModel.humanWon()
-            this.winsPlayer++
-            this.handleGameOver('human')
+            this.computerModel.humanWon();
+            this.winsPlayer++;
+            this.handleGameOver("human");
           } else {
-            this.chosenPlayType = sweetChosen
-            const stateAfterPCMove = performMove(this.state, move)
-            const self = this
-            setTimeout(function() {
-              self.chosenPlayType = -1
-              self.state = stateAfterPCMove
-              self.updateSelection()
+            this.chosenPlayType = sweetChosen;
+            const stateAfterPCMove = performMove(this.state, move);
+            const self = this;
+            setTimeout(function () {
+              self.chosenPlayType = -1;
+              self.state = stateAfterPCMove;
+              self.updateSelection();
               if (self.checkWinner(stateAfterPCMove, self.computer)) {
-                self.computerModel.computerWon()
-                self.handleGameOver('computer')
+                self.computerModel.computerWon();
+                self.handleGameOver("computer");
               }
-            }, this.timeForPC)
+            }, this.timeForPC);
           }
         } else {
           // allow human to interact with the figures
         }
-        this.active = this.active == this.player ? this.computer : this.player
+        this.active = this.active == this.player ? this.computer : this.player;
       }
     },
   },
-  created: function() {
-    let uri = window.location.search.substring(1)
-    let params = new URLSearchParams(uri)
-    if (params.get('time')) {
-      this.timeForPC = params.get('time')
+  created: function () {
+    let uri = window.location.search.substring(1);
+    let params = new URLSearchParams(uri);
+    if (params.get("time")) {
+      this.timeForPC = params.get("time");
     }
 
-    if (params.get('halloween')) {
-      this.figureType = 1
+    if (params.get("cornelsen")) {
+      this.figureType = 1;
     }
-    if (params.get('robots')) {
-      this.figureType = 2
+    if (params.get("robots")) {
+      this.figureType = 2;
     }
 
-    this.updateSelection()
+    this.updateSelection();
   },
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -384,7 +396,7 @@ export default {
 
 .slider:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 26px;
   width: 26px;
   left: 4px;

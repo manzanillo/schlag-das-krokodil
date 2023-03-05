@@ -1,5 +1,5 @@
 {
-  "Reinforcement Learning - Beat the Crocodile": "Verstärkendes Lernen - Schlag das Krokodil",
+  "Reinforcement Learning - Beat the Crocodile": "Verstärkendes Lernen - Schlag den Computer",
   "Reinforcement Learning - Beat the Robot": "Verstärkendes Lernen – Schlag den Roboter",
   "Board": "Spielfeld",
   "Score": "Punkte",
@@ -19,8 +19,8 @@
   "Use this button to display only those rules that": "Mithilfe dieser Schaltfläche kannst du dir nur jene Regeln anzeigen lassen, die",
   "might follow your next move directly": "direkt auf deinen nächsten Zug folgen könnten",
   "and in which the computer has not yet lost.": "und in denen der Computer noch nicht verloren hat.",
-  "You are playing the <strong>pumpkins</strong>. You win, if": "Du spielst die <strong>Kürbisse</strong>! Du gewinnst, wenn",
-  "Move a pumpkin via <strong>drag-and-drop!</strong>": "Bewege einen Kürbis via <strong>Drag-and-Drop!</strong>",
+  "You are playing the <strong>humans</strong>. You win, if": "Du spielst die <strong>Menschen</strong>! Du gewinnst, wenn",
+  "Move a piece via <strong>drag-and-drop!</strong>": "Bewege eine Figur via <strong>Drag-and-Drop!</strong>",
   "Speed": "Reaktionszeit",
   "Computer wins": "Computer gewinnt",
   "You win": "Du gewinnst"

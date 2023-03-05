@@ -70,17 +70,17 @@
           :width="dimension / 3"
           :height="dimension / 3"
           stroke="lightgray"
-          style="fill:rgb(255,255,255)"
+          style="fill: rgb(255, 255, 255)"
           stroke-width="1"
         />
 
         <image
-          v-else-if="occupation === 1 && figureType===1"
+          v-else-if="occupation === 1 && figureType === 1"
           :width="dimension / 3"
           :height="dimension / 3"
           :x="(dimension / 3) * (index % 3)"
           :y="(dimension / 3) * Math.floor(index / 3)"
-          xlink:href="../assets/monkey-halloween.svg"
+          xlink:href="../assets/c-human.svg"
         />
 
         <image
@@ -92,14 +92,13 @@
           xlink:href="../assets/monkey.svg"
         />
 
-
         <image
-          v-else-if="occupation === 2 && figureType===1"
+          v-else-if="occupation === 2 && figureType === 1"
           :width="dimension / 3"
           :height="dimension / 3"
           :x="(dimension / 3) * (index % 3)"
           :y="(dimension / 3) * Math.floor(index / 3)"
-          xlink:href="../assets/croco-halloween.svg"
+          xlink:href="../assets/c-robot.svg"
         />
 
         <image
@@ -144,7 +143,7 @@ export default {
     actions: Array,
     figureType: Number,
   },
-  data: function() {
+  data: function () {
     return {
       colors: [
         { name: "url(#arrow-blue)", hex: "#00f", fill: "blue" },
@@ -153,9 +152,9 @@ export default {
         { name: "url(#arrow-yellow)", hex: "#ffa500", fill: "orange" },
         { name: "url(#arrow-purple)", hex: "#80f", fill: "purple" },
       ],
-    }
+    };
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

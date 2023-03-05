@@ -9,9 +9,12 @@ Die Unplugged-Version der Aktivität finden Sie [hier](https://ddi.cs.fau.de/sch
 Das Applet kann unter https://www.stefanseegerer.de/schlag-das-krokodil/ ausprobiert werden.
 Es werden zwei Query-Parameter unterstützt.
 Mittels time=500 kann die Reaktionszeit des Computers auf eine beliebige MS-Zahl gestellt werden. (Beispiel: https://www.stefanseegerer.de/schlag-das-krokodil/?time=500)
-Mithilfe von halloween=true kann der Halloween-Modus aktiviert werden. (Beispiel: https://www.stefanseegerer.de/schlag-das-krokodil/?halloween=true)
+Mithilfe von cornelsen=true kann der Schulbuchmodus aktiviert werden. (Beispiel: https://www.stefanseegerer.de/schlag-das-krokodil/?cornelsen=true)
 
 
+Bitte beachten Sie, dass die Dateien `src/assets/c-human.svg` und `src/assets/c-robot.svg` nicht unter der Lizenz dieses Repositorys stehen.
+
+Please note that the files `src/assets/c-human.svg` and `src/assets/c-robot.svg` are not licenced under the licence of this repository.
 
 ## Project setup
 ```
