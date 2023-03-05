@@ -60,7 +60,7 @@
                   v-if="figureType === 1"
                   width="50"
                   height="50"
-                  xlink:href="./assets/c-human.svg"
+                  xlink:href="./assets/c-robot.svg"
                 />
                 <image
                   v-else-if="figureType === 2"
