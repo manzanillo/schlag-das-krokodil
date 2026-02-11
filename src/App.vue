@@ -282,7 +282,7 @@ export default {
     let uri = window.location.search.substring(1);
     let params = new URLSearchParams(uri);
     if (params.get("time")) {
-      this.timeForPC = params.get("time");
+      this.timeForPC = parseInt(params.get("time"), 10);
     }
 
     if (params.get("cornelsen")) {
